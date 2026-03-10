@@ -81,14 +81,13 @@
     <p>Complete cada seccion con la mayor precision posible. Esta informacion permite preparar una propuesta detallada, una estructura de precios ajustada al mercado y un plan de trabajo paso a paso.</p>
   </header>
 
-  <form id="intake-form" action="https://formsubmit.co/contact@escalantestrategic.com" method="POST">
+  <form id="intake-form" action="https://api.web3forms.com/submit" method="POST">
 
-    <!-- FormSubmit config -->
-    <input type="hidden" name="_subject" value="Formulario Propiedades RD — Nueva Respuesta">
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_template" value="table">
-    <input type="hidden" name="_next" value="about:blank">
-    <input type="hidden" name="_autoresponse" value="Gracias por completar el formulario. Su informacion ha sido recibida y estaremos en contacto pronto con su propuesta personalizada. — Escalante Strategic">
+    <!-- Web3Forms config -->
+    <input type="hidden" name="access_key" value="20f96154-03bc-4a17-9b0b-b0f1420800e4">
+    <input type="hidden" name="subject" value="Formulario Propiedades RD — Nueva Respuesta">
+    <input type="hidden" name="from_name" value="Escalante Strategic — Formulario RD">
+    <input type="hidden" name="redirect" value="false">
 
 
     <!-- S01 PROPIETARIO -->
@@ -516,7 +515,7 @@
     </div>
 
     <div class="submit-area">
-      <button type="submit" class="btn-submit">Enviar Informacion</button>
+      <button type="submit" class="btn-submit" id="btn-submit">Enviar Informacion</button>
       <p class="submit-note">Al enviar este formulario, su informacion sera recibida para preparar la propuesta personalizada.</p>
     </div>
 
@@ -531,6 +530,7 @@
 </div>
 
 <script>
+  // Progress bar
   function updateProgress() {
     const sections = document.querySelectorAll('.section[data-section]');
     let filled = 0;
@@ -547,6 +547,38 @@
 
   document.getElementById('intake-form').addEventListener('change', updateProgress);
   document.getElementById('intake-form').addEventListener('input', updateProgress);
+
+  // Web3Forms submission
+  document.getElementById('intake-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('btn-submit');
+    btn.textContent = 'Enviando...';
+    btn.disabled = true;
+
+    const formData = new FormData(this);
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        document.getElementById('intake-form').style.display = 'none';
+        document.getElementById('success-msg').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        btn.textContent = 'Enviar Informacion';
+        btn.disabled = false;
+        alert('Hubo un error al enviar. Por favor intente nuevamente.');
+      }
+    } catch (error) {
+      btn.textContent = 'Enviar Informacion';
+      btn.disabled = false;
+      alert('Error de conexion. Por favor verifique su internet e intente nuevamente.');
+    }
+  });
 </script>
 </body>
 </html>
