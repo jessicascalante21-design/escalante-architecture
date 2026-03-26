@@ -1,515 +1,914 @@
-﻿<!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Jessica Escalante — Professional Value Architecture™. Estrategia en hospitalidad, procesos y optimización financiera.">
-    <title>Jessica Escalante | Strategic Operations & Hospitality Finance</title>
-    
-    <!-- Frameworks -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <!-- Google Fonts -->
+    <title>Jessica Escalante | Strategic Operations · Hospitality</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- LinkedIn Badge Script -->
-    <script src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        graphite: '#0A0C10',
-                        slate: '#161B22',
-                        steel: '#30363D',
-                        platinum: '#C9D1D9',
-                        champagne: '#F0F6FC',
-                        bronze: '#B8976E',
-                        gold: '#967B54',
-                    },
-                    fontFamily: {
-                        serif: ['EB Garamond', 'serif'],
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        [x-cloak] { display: none !important; }
-        body { background: #0A0C10; color: #C9D1D9; font-family: 'Inter', sans-serif; font-weight: 300; }
-        .font-serif { font-family: 'EB Garamond', serif; }
-        
-        body::before {
-            content: '';
+        :root {
+            --navy-deep: #1a3a52;
+            --gold-premium: #D4AF37;
+            --gold-light: #E8C97D;
+            --cream: #F4F1E8;
+            --charcoal: #2F3542;
+            --slate: #5A6270;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--navy-deep);
+            color: var(--cream);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* HEADER */
+        header {
             position: fixed;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 100;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 58, 82, 0.97);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1.2rem 5%;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
         }
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .reveal.visible {
+
+        .logo-area {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--gold-premium);
+            letter-spacing: 0.02em;
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            color: var(--cream);
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+            font-weight: 400;
+        }
+
+        nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--cream);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.85rem;
+            letter-spacing: 0.03em;
+            transition: all 0.3s ease;
+            opacity: 0.85;
+        }
+
+        nav a:hover {
+            color: var(--gold-premium);
             opacity: 1;
-            transform: translateY(0);
         }
 
-        .glass-card {
-            background: rgba(22, 27, 34, 0.6);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(184, 151, 110, 0.15);
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--gold-premium);
+            color: var(--gold-premium);
+            padding: 0.4rem 1rem;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
             transition: all 0.3s ease;
         }
 
-        .glass-card:hover { border-color: #B8976E; }
-        .glass-card.active {
-            border-color: #B8976E;
-            background: rgba(184, 151, 110, 0.08);
-            box-shadow: 0 0 20px rgba(184, 151, 110, 0.1);
+        .lang-btn:hover {
+            background: var(--gold-premium);
+            color: var(--navy-deep);
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 10rem 5% 6rem;
+            background: linear-gradient(135deg, #1a3a52 0%, #0d1f2d 100%);
+        }
+
+        .hero-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-tagline {
+            font-size: 0.8rem;
+            color: var(--gold-premium);
+            letter-spacing: 0.2em;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 5.5rem;
+            font-weight: 300;
+            color: var(--gold-premium);
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .hero-statement {
+            font-size: 1.3rem;
+            color: var(--cream);
+            max-width: 900px;
+            line-height: 1.9;
+            font-weight: 300;
+            margin-bottom: 3.5rem;
+            opacity: 0.95;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .btn-primary {
+            background: var(--gold-premium);
+            color: var(--navy-deep);
+            padding: 1.1rem 2.8rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.08em;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--gold-premium);
+            padding: 1.1rem 2.8rem;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            letter-spacing: 0.08em;
+            border: 1px solid var(--gold-premium);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* EVOLUTION SECTION */
+        .evolution {
+            padding: 8rem 5%;
+            background: var(--charcoal);
+        }
+
+        .section-header {
+            max-width: 1400px;
+            margin: 0 auto 5rem;
+        }
+
+        .section-tag {
+            font-size: 0.75rem;
+            color: var(--gold-premium);
+            letter-spacing: 0.2em;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.2rem;
+            color: var(--cream);
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            letter-spacing: -0.01em;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--slate);
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .timeline {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--gold-premium), transparent);
+        }
+
+        .timeline-item {
+            margin-bottom: 4rem;
+            padding-left: 4rem;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--gold-premium);
+            border: 3px solid var(--charcoal);
+        }
+
+        .timeline-item h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: var(--gold-premium);
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+        }
+
+        .timeline-item p {
+            color: var(--cream);
+            line-height: 1.9;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .timeline-tags {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            color: var(--slate);
+            padding: 0.4rem 1rem;
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            letter-spacing: 0.05em;
+        }
+
+        /* PILLARS */
+        .pillars {
+            padding: 8rem 5%;
+            background: var(--navy-deep);
+        }
+
+        .pillars-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .pillar-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            padding: 3rem;
+            transition: all 0.4s ease;
+        }
+
+        .pillar-card:hover {
+            border-color: var(--gold-premium);
+            background: rgba(212, 175, 55, 0.03);
+            transform: translateY(-5px);
+        }
+
+        .pillar-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: var(--gold-premium);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .pillar-card p {
+            color: var(--cream);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .pillar-label {
+            font-size: 0.75rem;
+            color: var(--slate);
+            letter-spacing: 0.1em;
+            font-weight: 500;
+        }
+
+        /* METHODOLOGY */
+        .methodology {
+            padding: 8rem 5%;
+            background: linear-gradient(135deg, var(--charcoal) 0%, #1a1e27 100%);
+        }
+
+        .escala-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .escala-step {
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid var(--gold-premium);
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .escala-step:hover {
+            background: rgba(212, 175, 55, 0.05);
+            transform: translateX(5px);
+        }
+
+        .step-letter {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            color: var(--gold-premium);
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .step-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--cream);
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+        }
+
+        .step-desc {
+            color: var(--slate);
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            font-weight: 300;
+        }
+
+        .step-output {
+            color: var(--gold-premium);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            font-weight: 500;
+        }
+
+        /* DIAGNOSTIC */
+        .diagnostic {
+            padding: 8rem 5%;
+            background: var(--navy-deep);
+        }
+
+        .diagnostic-levels {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .level-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .level-card:hover {
+            border-color: var(--gold-premium);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .level-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--gold-premium);
+            margin-bottom: 1.5rem;
+        }
+
+        .level-card p {
+            color: var(--cream);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        /* REALITY */
+        .reality {
+            padding: 8rem 5%;
+            background: var(--charcoal);
+            text-align: center;
+        }
+
+        .reality-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .reality-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            color: var(--gold-premium);
+            margin-bottom: 2rem;
+            font-weight: 300;
+            line-height: 1.4;
+        }
+
+        .reality-text {
+            font-size: 1.1rem;
+            color: var(--cream);
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        .reality-emphasis {
+            font-size: 1.3rem;
+            color: var(--gold-premium);
+            font-weight: 500;
+            letter-spacing: 0.05em;
+        }
+
+        /* CONTACT */
+        .contact {
+            padding: 8rem 5%;
+            background: linear-gradient(135deg, #0d1f2d 0%, var(--navy-deep) 100%);
+            text-align: center;
+        }
+
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.2rem;
+            color: var(--gold-premium);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .contact-note {
+            font-size: 1rem;
+            color: var(--cream);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .contact-emphasis {
+            font-weight: 500;
+            color: var(--gold-premium);
+        }
+
+        .contact-button {
+            display: inline-block;
+            margin-top: 3rem;
+            background: var(--gold-premium);
+            color: var(--navy-deep);
+            padding: 1.2rem 3.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+        }
+
+        .contact-button:hover {
+            background: var(--gold-light);
+            transform: translateY(-3px);
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--charcoal);
+            padding: 4rem 5%;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-statement {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--gold-premium);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .footer-contact {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-contact a {
+            color: var(--cream);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-contact a:hover {
+            color: var(--gold-premium);
+        }
+
+        .footer-copyright {
+            color: var(--slate);
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 4rem;
+            }
+
+            .diagnostic-levels {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 3%;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hero {
+                padding: 8rem 3% 4rem;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero-statement {
+                font-size: 1.1rem;
+            }
+
+            .evolution,
+            .pillars,
+            .methodology,
+            .diagnostic,
+            .reality,
+            .contact {
+                padding: 5rem 3%;
+            }
+
+            .pillars-grid,
+            .escala-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-item {
+                padding-left: 2.5rem;
+            }
         }
     </style>
 </head>
-
-<body x-data="{ 
-    lang: 'es', 
-    scrolled: false,
-    content: {
-        es: {
-            nav: ['Trayectoria', 'Pilares', 'Método', 'Diagnóstico', 'Agenda', 'Contacto'],
-            hero_eyebrow: 'Strategic Intelligence · Hospitalidad · Arquitectura',
-            hero_title: 'Arquitectura de<br><span class=\'italic font-light text-bronze\'>Crecimiento.</span>',
-            hero_sub: 'Construyo estructuras que convierten experiencia en capital y estrategia en expansión sostenible. Diseño sistemas donde la hospitalidad se encuentra con las finanzas, y la operación genera rentabilidad disciplinada.',
-            hero_cta_diag: 'Diagnóstico Estructural',
-            hero_cta_agenda: 'Agendar Sesión',
-            trayectoria_title: 'De la Operación a la Arquitectura Estratégica',
-            trayectoria_sub: 'Una progresión real desde el front desk hasta el diseño estructural de sistemas en hospitalidad.',
-            p_block1_t: 'El Inicio: La Experiencia Humana',
-            p_block1_d: 'Mi carrera comenzó en recepción, gestionando check-ins y conversaciones cara a cara. En entornos boutique aprendí que la hospitalidad no es logística. Es percepción.',
-            p_block1_tag: 'Base Profesional',
-            p_block1_list: 'Front Desk · Atención Multicultural · Gestión Presencial',
-            p_block2_t: 'Gestión de Crisis y Alto Volumen',
-            p_block2_d: 'En soporte internacional gestioné cancelaciones y conflictos complejos. Aprendí a convertir el caos en soluciones medibles bajo presión constante.',
-            p_block2_tag: 'Escuela de Presión',
-            p_block2_list: 'Escalaciones · Resolución de Conflictos · Soporte Global',
-            p_block3_t: 'Rigor de Marca Global',
-            p_block3_d: 'En Hilton comprendí que los estándares son la arquitectura invisible que sostiene la reputación. La excelencia es un sistema, no un accidente.',
-            p_block3_tag: 'Disciplina Operativa',
-            p_block3_list: 'Estándares Hilton · Coordinación Interdepartamental',
-            p_summary_t: 'Arquitectura Estratégica',
-            p_summary_d: 'Hoy integro experiencia operativa real con visión financiera. Diseño estructuras para que la operación funcione sin depender del esfuerzo humano constante.',
-            pilares_title: 'Pilares de Intervención Estratégica',
-            pilares: [
-                {t: 'Finanzas', d: 'Optimización de RevPAR y control de costos para proteger flujos de caja.', r: 'Márgenes Protegidos'},
-                {t: 'Sistemas', d: 'Diseño de SOPs que eliminan la dependencia de personas aisladas.', r: 'Expansión sin Caos'},
-                {t: 'Experiencia', d: 'Traducción de métricas en impacto económico y reputación capitalizable.', r: 'Reputación Activa'},
-                {t: 'Mentalidad', d: 'Liderazgo basado en KPIs y toma de decisiones financiera de largo plazo.', r: 'Autonomía Estratégica'}
-            ],
-            method_title: 'Metodología E.S.C.A.L.A™',
-            method_sub: 'Sistema de seis fases que traduce la operatividad en activos financieros.',
-            method_steps: [
-                {l: 'E', t: 'Evaluación', d: 'Auditoría de brechas operativas.', r: 'Roadmap Estratégico'},
-                {l: 'S', t: 'Sistematización', d: 'Manuales y flujos autónomos.', r: 'Playbooks & SOPs'},
-                {l: 'C', t: 'Calibración', d: 'Ajuste de KPIs financieros.', r: 'Dashboard de Control'},
-                {l: 'A', t: 'Activación', d: 'Entrenamiento e implementación.', r: 'Plan de Ejecución'},
-                {l: 'L', t: 'Legitimación', d: 'Validación de autoridad.', r: 'Informe de Impacto'},
-                {l: 'A', t: 'Ascenso', d: 'Escalabilidad planificada.', r: 'Plan 90 Días'}
-            ],
-            diag_title: 'Diagnóstico Estructural',
-            diag_prof: 'Profesional',
-            diag_ent: 'Empresarial',
-            diag_q1_p: 'Ejecutas pero dependes de tu presencia directa.',
-            diag_q2_p: 'Coordinas equipos pero operas en lo urgente.',
-            diag_q3_p: 'Diseñas estructuras y piensas en expansión.',
-            diag_q1_e: '¿Tu operación depende de sistemas o personas?',
-            diag_opt_e1: 'Personas clave',
-            diag_opt_e2: 'Procesos documentados',
-            diag_res_title: 'Resultado',
-            diag_cta_p: 'Solicitar Plan Personalizado',
-            diag_cta_e: 'Agendar Auditoría',
-            diag_ent_msg: 'Módulo empresarial disponible para auditoría directa.',
-            industry_eyebrow: 'Realidad de la Industria',
-            industry_title: '“La IA reemplazará millones de tareas operativas.”<br><span class=\'text-platinum/60\'>Pero no reemplazará criterio estratégico.</span>',
-            industry_glass: 'El verdadero diferencial está en saber usar la automatización sin que el huésped pierda la sensación de atención personalizada.',
-            industry_footer: 'La tecnología ejecuta. La estrategia diseña.',
-            agenda_eyebrow: 'Executive Conversation',
-            agenda_title: 'Agenda una conversación estratégica.',
-            agenda_sub: '30 minutos para analizar estructura y detectar fricciones invisibles.',
-            agenda_footer: 'Solo perfiles estratégicos. No llamadas informativas.',
-            contact_title: 'Hablemos de Estructura.',
-            contact_mail_sub: 'Consulta sobre Arquitectura Estratégica',
-            contact_wa_msg: 'Hola Jessica, estoy interesado en una consulta sobre arquitectura estratégica.',
-            footer_desc: 'Estrategia no es solo una palabra, es arquitectura de valor aplicada al capital y a las personas.'
-        },
-        en: {
-            nav: ['Trajectory', 'Pillars', 'Method', 'Diagnosis', 'Agenda', 'Contact'],
-            hero_eyebrow: 'Strategic Intelligence · Hospitality · Architecture',
-            hero_title: 'Architecture of<br><span class=\'italic font-light text-bronze\'>Growth.</span>',
-            hero_sub: 'I build structures that turn experience into capital and strategy into sustainable expansion. I design systems where hospitality meets finance, and operations generate disciplined profitability.',
-            hero_cta_diag: 'Structural Diagnosis',
-            hero_cta_agenda: 'Book a Session',
-            trayectoria_title: 'From Operations to Strategic Architecture',
-            trayectoria_sub: 'A real progression from the front desk to the structural design of hospitality systems.',
-            p_block1_t: 'The Beginning: The Human Experience',
-            p_block1_d: 'My career began at the front desk, managing check-ins and face-to-face interactions. In boutique environments, I learned that hospitality is not logistics. It\'s perception.',
-            p_block1_tag: 'Professional Base',
-            p_block1_list: 'Front Desk · Multicultural Care · On-site Management',
-            p_block2_t: 'Crisis & High-Volume Management',
-            p_block2_d: 'In international support, I managed complex cancellations and conflicts. I learned to turn chaos into measurable solutions under constant pressure.',
-            p_block2_tag: 'Pressure School',
-            p_block2_list: 'Escalations · Conflict Resolution · Global Support',
-            p_block3_t: 'Global Brand Rigor',
-            p_block3_d: 'At Hilton, I realized that standards are the invisible architecture that sustains reputation. Excellence is a system, not an accident.',
-            p_block3_tag: 'Operational Discipline',
-            p_block3_list: 'Hilton Standards · Interdepartmental Coordination',
-            p_summary_t: 'Strategic Architecture',
-            p_summary_d: 'Today, I integrate real operational experience with financial vision. I design structures so that operations run without depending on constant human effort.',
-            pilares_title: 'Strategic Intervention Pillars',
-            pilares: [
-                {t: 'Finance', d: 'RevPAR optimization and cost control to protect cash flows.', r: 'Protected Margins'},
-                {t: 'Systems', d: 'SOP design that eliminates dependency on isolated individuals.', r: 'Expansion without Chaos'},
-                {t: 'Experience', d: 'Translating metrics into economic impact and capitalizable reputation.', r: 'Active Reputation'},
-                {t: 'Mindset', d: 'KPI-driven leadership and long-term financial decision-making.', r: 'Strategic Autonomy'}
-            ],
-            method_title: 'E.S.C.A.L.A™ Methodology',
-            method_sub: 'A six-phase system that translates operations into financial assets.',
-            method_steps: [
-                {l: 'E', t: 'Evaluation', d: 'Operational gap audit.', r: 'Strategic Roadmap'},
-                {l: 'S', t: 'Systematization', d: 'Autonomous flows and manuals.', r: 'Playbooks & SOPs'},
-                {l: 'C', t: 'Calibration', d: 'Financial KPI adjustment.', r: 'Control Dashboard'},
-                {l: 'A', t: 'Activation', d: 'Training and implementation.', r: 'Execution Plan'},
-                {l: 'L', t: 'Legitimation', d: 'Authority validation.', r: 'Impact Report'},
-                {l: 'A', t: 'Ascent', d: 'Planned scalability.', r: '90-Day Plan'}
-            ],
-            diag_title: 'Structural Diagnosis',
-            diag_prof: 'Professional',
-            diag_ent: 'Business',
-            diag_q1_p: 'You execute but depend on your direct presence.',
-            diag_q2_p: 'You coordinate teams but operate in the urgent.',
-            diag_q3_p: 'You design structures and think about expansion.',
-            diag_q1_e: 'Does your operation depend on systems or people?',
-            diag_opt_e1: 'Key people',
-            diag_opt_e2: 'Documented processes',
-            diag_res_title: 'Result',
-            diag_cta_p: 'Request Personalized Plan',
-            diag_cta_e: 'Book Audit',
-            diag_ent_msg: 'Business module available for direct audit.',
-            industry_eyebrow: 'Industry Reality',
-            industry_title: '“AI will replace millions of operational tasks.”<br><span class=\'text-platinum/60\'>But it won\'t replace strategic criteria.</span>',
-            industry_glass: 'The true differentiator lies in knowing how to use automation without the guest losing the sense of personalized attention.',
-            industry_footer: 'Technology executes. Strategy designs.',
-            agenda_title: 'Schedule a strategic conversation.',
-            agenda_sub: '30 minutes to analyze structure and detect invisible friction.',
-            contact_title: 'Let\'s talk Structure.',
-            contact_mail_sub: 'Strategic Architecture Inquiry',
-            contact_wa_msg: 'Hello Jessica, I am interested in a strategic architecture consultation.',
-            footer_desc: 'Strategy is not just a word; it is value architecture applied to capital and people.'
-        }
-    }
-}" @scroll.window="scrolled = (window.pageYOffset > 50)">
-
-    <!-- NAVEGACIÓN -->
-    <nav :class="scrolled ? 'bg-graphite/95 backdrop-blur-md py-4 border-b border-steel/20' : 'bg-transparent py-8'" 
-         class="fixed w-full z-50 transition-all duration-500">
-        <div class="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-            <div class="flex flex-col">
-                <span class="text-sm font-serif tracking-[0.3em] uppercase text-white leading-none">Jessica Escalante</span>
-                <span class="text-[9px] tracking-[0.4em] text-bronze uppercase mt-1 font-bold">Strategic Operations · Hospitality</span>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-content">
+            <div class="logo-area">
+                <div class="logo-name">Jessica Escalante</div>
+                <div class="logo-subtitle">Strategic Operations · Hospitality</div>
             </div>
-            
-            <div class="hidden lg:flex items-center gap-10 text-[10px] uppercase tracking-[0.2em] font-bold text-platinum/60">
-                <template x-for="(item, index) in content[lang].nav">
-                    <a :href="'#' + item.toLowerCase()" class="hover:text-bronze transition-colors" x-text="item"></a>
-                </template>
-                <button @click="lang = (lang === 'es' ? 'en' : 'es')" class="text-bronze border border-bronze/30 px-3 py-1 hover:bg-bronze/10">
-                    <span x-text="lang === 'es' ? 'EN' : 'ES'"></span>
-                </button>
+            <nav>
+                <a href="#trayectoria">Trayectoria</a>
+                <a href="#pilares">Pilares</a>
+                <a href="#metodo">Método</a>
+                <a href="#diagnostico">Diagnóstico</a>
+                <a href="#agenda">Agenda</a>
+                <a href="#contacto">Contacto</a>
+                <button class="lang-btn" onclick="toggleLanguage()">EN</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <img src="/mnt/user-data/uploads/ESCALANTE_STRATEGIC__2_.png" class="hero-logo" alt="Escalante Strategic Logo">
+        <div class="hero-content">
+            <div class="hero-tagline">Strategic Intelligence · Hospitalidad · Arquitectura</div>
+            <h1>Arquitectura de Crecimiento.</h1>
+            <p class="hero-statement">Construyo estructuras que convierten experiencia en capital y estrategia en expansión sostenible. Diseño sistemas donde la hospitalidad se encuentra con las finanzas, y la operación genera rentabilidad disciplinada.</p>
+            <div class="hero-cta">
+                <a href="#diagnostico" class="btn-primary">DIAGNÓSTICO ESTRUCTURAL</a>
+                <a href="#agenda" class="btn-secondary">AGENDAR SESIÓN</a>
             </div>
         </div>
-    </nav>
+    </section>
 
-    <!-- HERO SECTION -->
-    <section class="relative min-h-screen flex items-center px-6 md:px-12">
-        <div class="max-w-7xl mx-auto w-full pt-20">
-            <div class="max-w-5xl reveal" x-init="$el.classList.add('visible')">
-                <p class="text-bronze text-[10px] uppercase tracking-[0.5em] font-bold mb-8 italic" x-text="content[lang].hero_eyebrow"></p>
-                <h1 class="text-6xl md:text-[6.5rem] font-serif leading-[0.9] tracking-tighter text-white mb-10" x-html="content[lang].hero_title"></h1>
-                
-                <div class="h-px w-24 bg-bronze/40 mb-10"></div>
-                
-                <div class="max-w-2xl space-y-8 mb-12">
-                    <p class="text-2xl font-serif italic text-platinum/90 leading-relaxed text-balance" x-text="content[lang].hero_sub"></p>
+    <!-- PROFESSIONAL EVOLUTION -->
+    <section class="evolution" id="trayectoria">
+        <div class="section-header">
+            <div class="section-tag">PROFESSIONAL EVOLUTION</div>
+            <h2 class="section-title">De la Operación a la Arquitectura Estratégica</h2>
+            <p class="section-subtitle">Una progresión real desde el front desk hasta el diseño estructural de sistemas en hospitalidad.</p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <h3>El Inicio: La Experiencia Humana</h3>
+                <p>Mi carrera comenzó en recepción, gestionando check-ins y conversaciones cara a cara. En entornos boutique aprendí que la hospitalidad no es logística. Es percepción.</p>
+                <div class="timeline-tags">
+                    <span class="tag">Front Desk</span>
+                    <span class="tag">Atención Multicultural</span>
+                    <span class="tag">Gestión Presencial</span>
                 </div>
+            </div>
 
-                <div class="flex flex-wrap gap-6">
-                    <a href="#diagnóstico" class="bg-bronze text-graphite px-10 py-5 text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-white transition-all shadow-2xl">
-                        <span x-text="content[lang].hero_cta_diag"></span>
-                    </a>
-                    <a href="#agenda" class="border border-white/10 px-10 py-5 text-[10px] uppercase tracking-[0.3em] font-bold text-white hover:bg-white/5 transition-all">
-                        <span x-text="content[lang].hero_cta_agenda"></span>
-                    </a>
+            <div class="timeline-item">
+                <h3>Gestión de Crisis y Alto Volumen</h3>
+                <p>En soporte internacional gestioné cancelaciones y conflictos complejos. Aprendí a convertir el caos en soluciones medibles bajo presión constante.</p>
+                <div class="timeline-tags">
+                    <span class="tag">Escalaciones</span>
+                    <span class="tag">Resolución de Conflictos</span>
+                    <span class="tag">Soporte Global</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h3>Rigor de Marca Global</h3>
+                <p>En Hilton comprendí que los estándares son la arquitectura invisible que sostiene la reputación. La excelencia es un sistema, no un accidente.</p>
+                <div class="timeline-tags">
+                    <span class="tag">Estándares Hilton</span>
+                    <span class="tag">Coordinación Interdepartamental</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h3>Arquitectura Estratégica</h3>
+                <p>Hoy integro experiencia operativa real con visión financiera. Diseño estructuras para que la operación funcione sin depender del esfuerzo humano constante.</p>
+                <div class="timeline-tags">
+                    <span class="tag">Diseño de Sistemas</span>
+                    <span class="tag">Arquitectura Financiera</span>
+                    <span class="tag">Escalabilidad</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- TRAYECTORIA · BLOQUES -->
-    <section id="trayectoria" class="py-32 px-6 md:px-12 bg-slate/30">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-24 reveal" x-intersect="$el.classList.add('visible')">
-                <p class="text-bronze text-[10px] uppercase tracking-[0.5em] font-bold mb-6 italic">Professional Evolution</p>
-                <h2 class="text-5xl font-serif italic text-white mb-6" x-text="content[lang].trayectoria_title"></h2>
-                <p class="text-platinum/60 italic max-w-3xl mx-auto" x-text="content[lang].trayectoria_sub"></p>
+    <!-- PILLARS -->
+    <section class="pillars" id="pilares">
+        <div class="section-header">
+            <div class="section-tag">PILARES DE INTERVENCIÓN ESTRATÉGICA</div>
+            <h2 class="section-title">Cuatro Dimensiones de Impacto</h2>
+        </div>
+
+        <div class="pillars-grid">
+            <div class="pillar-card">
+                <h3>Finanzas</h3>
+                <p>Optimización de RevPAR y control de costos para proteger flujos de caja.</p>
+                <div class="pillar-label">Márgenes Protegidos</div>
             </div>
 
-            <div class="space-y-32">
-                <div class="grid lg:grid-cols-2 gap-16 items-center reveal" x-intersect="$el.classList.add('visible')">
-                    <div>
-                        <h3 class="text-3xl font-serif italic text-white mb-6" x-text="content[lang].p_block1_t"></h3>
-                        <p class="text-platinum/70 leading-relaxed font-light text-lg" x-text="content[lang].p_block1_d"></p>
-                    </div>
-                    <div class="glass-card p-10 border-l-4 border-bronze">
-                        <span class="text-bronze text-[10px] uppercase tracking-widest font-bold" x-text="content[lang].p_block1_tag"></span>
-                        <p class="mt-6 text-sm text-platinum/60 italic font-light" x-text="content[lang].p_block1_list"></p>
-                    </div>
-                </div>
+            <div class="pillar-card">
+                <h3>Sistemas</h3>
+                <p>Diseño de SOPs que eliminan la dependencia de personas aisladas.</p>
+                <div class="pillar-label">Expansión sin Caos</div>
+            </div>
 
-                <div class="grid lg:grid-cols-2 gap-16 items-center reveal" x-intersect="$el.classList.add('visible')">
-                    <div class="order-2 lg:order-1 glass-card p-10 border-r-4 border-bronze text-right">
-                        <span class="text-bronze text-[10px] uppercase tracking-widest font-bold" x-text="content[lang].p_block2_tag"></span>
-                        <p class="mt-6 text-sm text-platinum/60 italic font-light" x-text="content[lang].p_block2_list"></p>
-                    </div>
-                    <div class="order-1 lg:order-2">
-                        <h3 class="text-3xl font-serif italic text-white mb-6" x-text="content[lang].p_block2_t"></h3>
-                        <p class="text-platinum/70 leading-relaxed font-light text-lg" x-text="content[lang].p_block2_d"></p>
-                    </div>
-                </div>
+            <div class="pillar-card">
+                <h3>Experiencia</h3>
+                <p>Traducción de métricas en impacto económico y reputación capitalizable.</p>
+                <div class="pillar-label">Reputación Activa</div>
+            </div>
 
-                <div class="grid lg:grid-cols-2 gap-16 items-center reveal" x-intersect="$el.classList.add('visible')">
-                    <div>
-                        <h3 class="text-3xl font-serif italic text-white mb-6" x-text="content[lang].p_block3_t"></h3>
-                        <p class="text-platinum/70 leading-relaxed font-light text-lg" x-text="content[lang].p_block3_d"></p>
-                    </div>
-                    <div class="glass-card p-10 border-l-4 border-bronze">
-                        <span class="text-bronze text-[10px] uppercase tracking-widest font-bold" x-text="content[lang].p_block3_tag"></span>
-                        <p class="mt-6 text-sm text-platinum/60 italic font-light" x-text="content[lang].p_block3_list"></p>
-                    </div>
-                </div>
-
-                <div class="text-center max-w-4xl mx-auto reveal" x-intersect="$el.classList.add('visible')">
-                    <div class="glass-card p-16 border border-bronze/30 relative overflow-hidden">
-                        <div class="absolute inset-0 bg-bronze/5"></div>
-                        <h3 class="text-4xl font-serif italic text-white mb-8" x-text="content[lang].p_summary_t"></h3>
-                        <p class="text-xl font-serif italic text-platinum/90 leading-relaxed" x-text="content[lang].p_summary_d"></p>
-                    </div>
-                </div>
+            <div class="pillar-card">
+                <h3>Mentalidad</h3>
+                <p>Liderazgo basado en KPIs y toma de decisiones financiera de largo plazo.</p>
+                <div class="pillar-label">Autonomía Estratégica</div>
             </div>
         </div>
     </section>
 
-    <!-- PILARES -->
-    <section id="pilares" class="py-32 px-6 md:px-12 bg-graphite">
-        <div class="max-w-7xl mx-auto text-center mb-24 reveal" x-intersect="$el.classList.add('visible')">
-            <h2 class="text-5xl font-serif italic text-white" x-text="content[lang].pilares_title"></h2>
+    <!-- METHODOLOGY -->
+    <section class="methodology" id="metodo">
+        <div class="section-header">
+            <div class="section-tag">METODOLOGÍA E.S.C.A.L.A™</div>
+            <h2 class="section-title">Sistema de seis fases que traduce la operatividad en activos financieros.</h2>
         </div>
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-8 reveal" x-intersect="$el.classList.add('visible')">
-            <template x-for="pilar in content[lang].pilares">
-                <div class="glass-card p-10 hover:border-bronze transition-all flex flex-col justify-between h-full">
-                    <div>
-                        <h3 class="text-white font-serif italic text-2xl mb-4" x-text="pilar.t"></h3>
-                        <p class="text-xs text-platinum/50 leading-relaxed italic mb-6" x-text="pilar.d"></p>
-                    </div>
-                    <span class="text-[10px] uppercase tracking-widest text-bronze font-bold" x-text="pilar.r"></span>
-                </div>
-            </template>
-        </div>
-    </section>
 
-    <!-- METODOLOGÍA -->
-    <section id="método" class="py-32 px-6 md:px-12 bg-graphite border-y border-white/5">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col lg:flex-row gap-20 items-center mb-24">
-                <div class="lg:w-1/3 reveal" x-intersect="$el.classList.add('visible')">
-                    <h2 class="text-6xl font-serif italic text-white mb-8" x-text="content[lang].method_title"></h2>
-                    <p class="text-platinum/60 font-light italic text-lg" x-text="content[lang].method_sub"></p>
-                </div>
-                <div class="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 reveal" x-intersect="$el.classList.add('visible')">
-                    <template x-for="step in content[lang].method_steps">
-                        <div class="space-y-4 group h-full">
-                            <span class="text-6xl font-serif italic text-bronze/20 group-hover:text-bronze transition-colors" x-text="step.l"></span>
-                            <h4 class="text-sm font-bold uppercase tracking-widest text-white" x-text="step.t"></h4>
-                            <p class="text-[10px] text-platinum/50 font-light italic leading-relaxed" x-text="step.d"></p>
-                            <p class="text-[9px] uppercase tracking-widest text-bronze font-bold" x-text="step.r"></p>
-                        </div>
-                    </template>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- DIAGNÓSTICO -->
-    <section id="diagnóstico" class="py-32 px-6 md:px-12 bg-slate/20 border-t border-white/5" x-data="diagnosticoDual()">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-20 reveal" x-intersect="$el.classList.add('visible')">
-                <h2 class="text-5xl font-serif italic text-white mb-6" x-text="content[lang].diag_title"></h2>
-            </div>
-            <div class="flex justify-center gap-8 mb-16">
-                <button @click="modo='profesional'" :class="modo==='profesional' ? 'text-bronze border-b border-bronze' : 'text-platinum/40'" class="uppercase tracking-widest text-xs pb-2 font-bold transition-all" x-text="content[lang].diag_prof"></button>
-                <button @click="modo='empresa'" :class="modo==='empresa' ? 'text-bronze border-b border-bronze' : 'text-platinum/40'" class="uppercase tracking-widest text-xs pb-2 font-bold transition-all" x-text="content[lang].diag_ent"></button>
+        <div class="escala-grid">
+            <div class="escala-step">
+                <div class="step-letter">E</div>
+                <div class="step-name">Evaluación</div>
+                <p class="step-desc">Auditoría de brechas operativas.</p>
+                <div class="step-output">Roadmap Estratégico</div>
             </div>
 
-            <div x-show="modo==='profesional'" x-transition x-cloak>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <button @click="respuestasProfesional.nivel='ejecuta'" :class="respuestasProfesional.nivel==='ejecuta'?'active':''" class="glass-card p-8 text-left h-full">
-                        <p class="text-sm italic font-light" x-text="content[lang].diag_q1_p"></p>
-                    </button>
-                    <button @click="respuestasProfesional.nivel='coordina'" :class="respuestasProfesional.nivel==='coordina'?'active':''" class="glass-card p-8 text-left h-full">
-                        <p class="text-sm italic font-light" x-text="content[lang].diag_q2_p"></p>
-                    </button>
-                    <button @click="respuestasProfesional.nivel='escala'" :class="respuestasProfesional.nivel==='escala'?'active':''" class="glass-card p-8 text-left h-full">
-                        <p class="text-sm italic font-light" x-text="content[lang].diag_q3_p"></p>
-                    </button>
-                </div>
-                <div x-show="respuestasProfesional.nivel" class="mt-16 glass-card p-12 text-center border border-bronze/30" x-transition>
-                    <h3 class="text-3xl font-serif italic mb-6 text-white" x-text="content[lang].diag_res_title"></h3>
-                    <p class="text-2xl font-serif italic text-platinum/90" x-text="resultadoProfesional(lang)"></p>
-                    <div class="mt-10">
-                        <a href="#agenda" class="bg-bronze text-graphite px-10 py-4 text-xs font-bold uppercase tracking-widest" x-text="content[lang].diag_cta_p"></a>
-                    </div>
-                </div>
+            <div class="escala-step">
+                <div class="step-letter">S</div>
+                <div class="step-name">Sistematización</div>
+                <p class="step-desc">Manuales y flujos autónomos.</p>
+                <div class="step-output">Playbooks & SOPs</div>
             </div>
 
-            <div x-show="modo==='empresa'" x-transition x-cloak>
-                <div class="space-y-12">
-                    <h4 class="text-white font-serif italic text-2xl mb-8" x-text="content[lang].diag_q1_e"></h4>
-                    <div class="grid md:grid-cols-2 gap-6 text-center">
-                        <button @click="respuestasEmpresa.dependencia='personas'" :class="respuestasEmpresa.dependencia==='personas'?'active':''" class="glass-card p-6 font-bold tracking-widest text-bronze uppercase" x-text="content[lang].diag_opt_e1"></button>
-                        <button @click="respuestasEmpresa.dependencia='sistemas'" :class="respuestasEmpresa.dependencia==='sistemas'?'active':''" class="glass-card p-6 font-bold tracking-widest text-bronze uppercase" x-text="content[lang].diag_opt_e2"></button>
-                    </div>
-                </div>
-                <div x-show="completoEmpresa()" class="mt-16 glass-card p-12 text-center border border-bronze/30" x-transition>
-                    <h3 class="text-3xl font-serif italic mb-6 text-white" x-text="content[lang].diag_res_title"></h3>
-                    <p class="text-2xl font-serif italic text-platinum/90" x-text="resultadoEmpresa(lang)"></p>
-                    <div class="mt-10">
-                        <a href="#agenda" class="bg-bronze text-graphite px-10 py-4 text-xs font-bold uppercase tracking-widest" x-text="content[lang].diag_cta_e"></a>
-                    </div>
-                </div>
+            <div class="escala-step">
+                <div class="step-letter">C</div>
+                <div class="step-name">Calibración</div>
+                <p class="step-desc">Ajuste de KPIs financieros.</p>
+                <div class="step-output">Dashboard de Control</div>
+            </div>
+
+            <div class="escala-step">
+                <div class="step-letter">A</div>
+                <div class="step-name">Activación</div>
+                <p class="step-desc">Entrenamiento e implementación.</p>
+                <div class="step-output">Plan de Ejecución</div>
+            </div>
+
+            <div class="escala-step">
+                <div class="step-letter">L</div>
+                <div class="step-name">Legitimación</div>
+                <p class="step-desc">Validación de autoridad.</p>
+                <div class="step-output">Informe de Impacto</div>
+            </div>
+
+            <div class="escala-step">
+                <div class="step-letter">A</div>
+                <div class="step-name">Ascenso</div>
+                <p class="step-desc">Escalabilidad planificada.</p>
+                <div class="step-output">Plan 90 Días</div>
             </div>
         </div>
     </section>
 
-    <!-- INDUSTRY FACT -->
-    <section id="industria" class="py-32 px-6 md:px-12 bg-slate/20 border-t border-white/5">
-        <div class="max-w-5xl mx-auto text-center reveal" x-intersect="$el.classList.add('visible')">
-            <p class="text-bronze text-[10px] uppercase tracking-[0.5em] font-bold mb-8" x-text="content[lang].industry_eyebrow"></p>
-            <h2 class="text-5xl font-serif italic text-white leading-tight mb-12" x-html="content[lang].industry_title"></h2>
-            <div class="glass-card p-12 border border-bronze/20 max-w-3xl mx-auto">
-                <p class="text-lg text-platinum/70 italic leading-relaxed" x-text="content[lang].industry_glass"></p>
+    <!-- DIAGNOSTIC -->
+    <section class="diagnostic" id="diagnostico">
+        <div class="section-header">
+            <div class="section-tag">DIAGNÓSTICO ESTRUCTURAL</div>
+            <h2 class="section-title">¿En qué nivel estás?</h2>
+        </div>
+
+        <div class="diagnostic-levels">
+            <div class="level-card">
+                <h3>Profesional</h3>
+                <p>Ejecutas pero dependes de tu presencia directa.</p>
             </div>
-            <p class="mt-16 text-bronze text-xs uppercase tracking-[0.6em] font-bold italic" x-text="content[lang].industry_footer"></p>
+
+            <div class="level-card">
+                <h3>Empresarial</h3>
+                <p>Coordinas equipos pero operas en lo urgente.</p>
+            </div>
+
+            <div class="level-card">
+                <h3>Arquitectura</h3>
+                <p>Diseñas estructuras y piensas en expansión.</p>
+            </div>
         </div>
     </section>
 
-    <!-- AGENDA -->
-    <section id="agenda" class="py-40 px-6 md:px-12 bg-graphite border-t border-white/5">
-        <div class="max-w-4xl mx-auto text-center reveal" x-intersect="$el.classList.add('visible')">
-            <p class="text-bronze text-[10px] uppercase tracking-[0.5em] font-bold mb-8">Executive Conversation</p>
-            <h2 class="text-6xl font-serif italic text-white leading-tight mb-12" x-text="content[lang].agenda_title"></h2>
-            <p class="text-2xl font-serif italic text-platinum/80 leading-relaxed mb-16" x-text="content[lang].agenda_sub"></p>
-            <div class="rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-                <iframe src="https://calendly.com/contact-escalantestrategic/30min" width="100%" height="700" frameborder="0" class="bg-slate"></iframe>
-            </div>
-            <p class="mt-12 text-xs uppercase tracking-[0.4em] text-platinum/40 italic" x-text="content[lang].agenda_footer"></p>
+    <!-- REALITY -->
+    <section class="reality">
+        <div class="section-header">
+            <div class="section-tag">REALIDAD DE LA INDUSTRIA</div>
+            <h2 class="section-title">El Verdadero Diferencial</h2>
+        </div>
+
+        <div class="reality-content">
+            <p class="reality-quote">"La IA reemplazará millones de tareas operativas."</p>
+            <p class="reality-text">Pero no reemplazará criterio estratégico.</p>
+            <p class="reality-text">El verdadero diferencial está en saber usar la automatización sin que el huésped pierda la sensación de atención personalizada.</p>
+            <p class="reality-emphasis">La tecnología ejecuta. La estrategia diseña.</p>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="agenda">
+        <div class="contact-content">
+            <div class="section-tag">EXECUTIVE CONVERSATION</div>
+            <h2>Agenda una conversación estratégica.</h2>
+            <p class="contact-note">30 minutos para analizar estructura y detectar fricciones invisibles.</p>
+            <p class="contact-note"><span class="contact-emphasis">Solo perfiles estratégicos.</span> No llamadas informativas.</p>
+            <a href="https://wa.me/573192383030?text=Hola%20Jessica%2C%20me%20interesa%20agendar%20una%20conversación%20estratégica" class="contact-button" target="_blank">HABLEMOS DE ESTRUCTURA</a>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer id="contacto" class="py-32 px-6 md:px-12 border-t border-white/5">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-20 reveal" x-intersect="$el.classList.add('visible')">
-            <div class="max-w-xl">
-                <h2 class="text-6xl font-serif italic text-white mb-8 leading-tight" x-text="content[lang].contact_title"></h2>
-                <p class="text-xl text-platinum/50 font-light italic" x-text="content[lang].footer_desc"></p>
-                
-                <!-- CONTACT ACTIONS -->
-                <div class="mt-12 space-y-4">
-                    <!-- Email Direct Action -->
-                    <a :href="'mailto:contact@escalantestrategic.com?subject=' + encodeURIComponent(content[lang].contact_mail_sub)" 
-                       class="text-platinum hover:text-bronze block text-lg font-light transition-colors">
-                        contact@escalantestrategic.com
-                    </a>
-                    
-                    <!-- WhatsApp Direct Action -->
-                    <a :href="'https://wa.me/573003751082?text=' + encodeURIComponent(content[lang].contact_wa_msg)" 
-                       target="_blank" 
-                       rel="noopener noreferrer"
-                       class="text-platinum hover:text-bronze block text-lg font-light transition-colors">
-                        +57 300 375 1082
-                    </a>
-                </div>
+    <footer id="contacto">
+        <div class="footer-content">
+            <p class="footer-statement">Estrategia no es solo una palabra, es arquitectura de valor aplicada al capital y a las personas.</p>
+            <div class="footer-contact">
+                <a href="mailto:contact@escalantestrategic.com">contact@escalantestrategic.com</a>
+                <a href="tel:+573192383030">+57 319 2383030</a>
             </div>
-            <div class="flex flex-col items-center gap-8 w-full md:w-auto">
-                <div class="badge-base LI-profile-badge shadow-2xl" data-locale="es_ES" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="jessica-escalante-99882b11b" data-version="v1">
-                    <a class="badge-base__link LI-simple-link" href="https://www.linkedin.com/in/jessica-escalante-99882b11b"></a>
-                </div>
-            </div>
-        </div>
-        <div class="mt-32 pt-12 border-t border-white/5 text-center">
-            <p class="text-[9px] text-platinum/30 uppercase tracking-[0.4em] font-medium">© 2026 Jessica Escalante | Professional Value Architecture™</p>
+            <p class="footer-copyright">© 2026 Jessica Escalante | Professional Value Architecture™</p>
         </div>
     </footer>
 
     <script>
-        lucide.createIcons();
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        function diagnosticoDual() {
-            return {
-                modo: 'profesional',
-                respuestasProfesional: { nivel: null },
-                respuestasEmpresa: { dependencia: null },
-                resultadoProfesional(l) {
-                    const res = {
-                        es: {
-                            ejecuta: "Operador de Alto Rendimiento. Prioridad: Evaluación + Sistematización.",
-                            coordina: "Coordinador Estratégico. Prioridad: Calibración + Activación.",
-                            escala: "Diseñador de Expansión. Prioridad: Legitimación + Ascenso."
-                        },
-                        en: {
-                            ejecuta: "High Performance Operator. Priority: Evaluation + Systematization.",
-                            coordina: "Strategic Coordinator. Priority: Calibration + Activation.",
-                            escala: "Expansion Designer. Priority: Legitimation + Ascent."
-                        }
-                    };
-                    return this.respuestasProfesional.nivel ? res[l][this.respuestasProfesional.nivel] : "";
-                },
-                completoEmpresa() { return this.respuestasEmpresa.dependencia; },
-                resultadoEmpresa(l) {
-                    const res = {
-                        es: {
-                            personas: "Riesgo de Dependencia Crítica. Prioridad: Sistematización.",
-                            sistemas: "Estructura en Evolución. Prioridad: Legitimación."
-                        },
-                        en: {
-                            personas: "Critical Dependency Risk. Priority: Systematization.",
-                            sistemas: "Evolving Structure. Priority: Legitimation."
-                        }
-                    };
-                    return this.respuestasEmpresa.dependencia ? res[l][this.respuestasEmpresa.dependencia] : "";
-                }
-            }
+        function toggleLanguage() {
+            alert('English version coming soon.');
         }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.pageYOffset > 50) {
+                header.style.background = 'rgba(26, 58, 82, 0.98)';
+            } else {
+                header.style.background = 'rgba(26, 58, 82, 0.97)';
+            }
+        });
     </script>
 </body>
 </html>
