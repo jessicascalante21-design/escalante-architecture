@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Contact</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<section class="section container">
+<h1>Contact</h1>
+
+<p>contact@escalantestrategic.com</p>
+
+<a href="https://wa.me/573192383030" class="btn primary">
+WhatsApp
+</a>
+
+</section>
+
+</body>
+</html>
+  
