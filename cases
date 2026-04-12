@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cases</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<section class="section container">
+<h1>Case Studies</h1>
+
+<div class="case">
+<h3>Puerto Rico</h3>
+<p>82% occupancy</p>
+</div>
+
+<div class="case">
+<h3>Colombia</h3>
+<p>+67% revenue</p>
+</div>
+
+</section>
+
+</body>
+</html>
