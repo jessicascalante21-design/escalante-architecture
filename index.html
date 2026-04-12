@@ -1,253 +1,1203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Escalante Strategic</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escalante Strategic | Boutique Hospitality Consultancy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --sand:#F5EFE6;--sand-dark:#EDE4D7;--sand-mid:#E2D5C4;
+  --teal:#1A5C55;--teal-light:#2A7A72;--teal-pale:#EAF3F2;--teal-dark:#123E39;
+  --gold:#C9A84C;--gold-light:#DFC078;
+  --charcoal:#1C1C1C;--charcoal-mid:#3A3A3A;--muted:#7A7A7A;--white:#FFFFFF;
+  --font-display:"Cormorant Garamond",serif;--font-body:"DM Sans",sans-serif;
+  --ease-out:cubic-bezier(0.22,1,0.36,1);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);color:var(--charcoal);background:var(--white);overflow-x:hidden}
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+/* ─── NAV ─── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(28,28,28,0.08);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:68px;transition:box-shadow .3s}
+nav.scrolled{box-shadow:0 2px 32px rgba(0,0,0,.08)}
+.nav-logo{font-family:var(--font-display);font-size:21px;font-weight:600;letter-spacing:.02em;color:var(--charcoal);cursor:pointer;user-select:none}
+.nav-logo span{color:var(--teal)}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{font-size:11.5px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--charcoal-mid);text-decoration:none;cursor:pointer;transition:color .2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--teal);transition:width .25s var(--ease-out)}
+.nav-links a:hover{color:var(--teal)}
+.nav-links a:hover::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:16px}
+.lang-toggle{display:flex;border:1px solid rgba(28,28,28,0.18);overflow:hidden}
+.lang-btn{font-family:var(--font-body);font-size:11px;font-weight:500;letter-spacing:.06em;padding:5px 11px;border:none;background:transparent;cursor:pointer;transition:all .2s;color:var(--muted)}
+.lang-btn.active{background:var(--charcoal);color:var(--white)}
+.nav-cta{background:var(--teal);color:var(--white);padding:9px 20px;font-family:var(--font-body);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;border:none;cursor:pointer;transition:background .2s}
+.nav-cta:hover{background:var(--teal-light)}
 
-  <style>
-    body {
-      margin: 0;
-      background: #0a0a0a;
-      color: #f5f5f5;
-      font-family: 'Inter', sans-serif;
-      line-height: 1.6;
-    }
+/* ─── MOBILE NAV ─── */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--charcoal);transition:all .3s}
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:var(--white);border-bottom:1px solid rgba(28,28,28,0.1);z-index:199;padding:20px 24px 28px;flex-direction:column;gap:0}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-size:13px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--charcoal-mid);text-decoration:none;padding:13px 0;border-bottom:1px solid rgba(28,28,28,.06);cursor:pointer}
+.mobile-menu .m-actions{display:flex;gap:10px;margin-top:16px}
+.mobile-menu .m-lang{display:flex;border:1px solid rgba(28,28,28,0.18)}
+.mobile-menu .m-lang button{font-size:11px;font-weight:500;padding:7px 13px;border:none;background:transparent;cursor:pointer;transition:all .2s;color:var(--muted)}
+.mobile-menu .m-lang button.active{background:var(--charcoal);color:var(--white)}
+.mobile-menu .m-cta{flex:1;background:var(--teal);color:var(--white);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;border:none;cursor:pointer;padding:11px}
 
-    .container {
-      width: 90%;
-      max-width: 1200px;
-      margin: auto;
-    }
+/* ─── PAGES ─── */
+.page{display:none;padding-top:68px;animation:fadeUp .5s var(--ease-out) both}
+.page.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
-    h1, h2, h3 {
-      font-family: 'Playfair Display', serif;
-      font-weight: 500;
-      margin-bottom: 20px;
-    }
+/* ─── HERO ─── */
+.hero{min-height:calc(100vh - 68px);display:grid;grid-template-columns:1fr 1fr}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:72px 56px;border-right:1px solid rgba(28,28,28,.08)}
+.hero-label{font-size:10.5px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:20px}
+.hero-title{font-family:var(--font-display);font-size:clamp(38px,4.5vw,62px);font-weight:300;line-height:1.1;color:var(--charcoal);margin-bottom:22px}
+.hero-title em{font-style:italic;color:var(--teal)}
+.hero-sub{font-size:15.5px;font-weight:300;line-height:1.75;color:var(--charcoal-mid);margin-bottom:36px;max-width:400px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.btn-primary{background:var(--teal);color:var(--white);padding:13px 28px;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--teal);cursor:pointer;transition:all .25s;font-family:var(--font-body)}
+.btn-primary:hover{background:var(--teal-dark);border-color:var(--teal-dark)}
+.btn-outline{background:transparent;color:var(--charcoal);padding:13px 28px;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--charcoal);cursor:pointer;transition:all .25s;font-family:var(--font-body)}
+.btn-outline:hover{background:var(--charcoal);color:var(--white)}
+.hero-right{background:var(--sand);display:flex;flex-direction:column;justify-content:flex-end;padding:56px}
+.hero-metrics{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:40px}
+.metric-card{background:var(--white);padding:22px 18px;border-left:2px solid var(--teal);transition:transform .3s var(--ease-out),box-shadow .3s}
+.metric-card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(26,92,85,.1)}
+.metric-num{font-family:var(--font-display);font-size:38px;font-weight:300;color:var(--teal);line-height:1}
+.metric-label{font-size:11px;font-weight:400;color:var(--muted);margin-top:5px;letter-spacing:.03em;line-height:1.4}
+.metric-time{font-size:9.5px;font-weight:500;color:var(--gold);margin-top:2px;letter-spacing:.05em;text-transform:uppercase}
+.hero-geo{font-size:10.5px;font-weight:400;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.gold-dot{display:inline-block;width:4px;height:4px;background:var(--gold);border-radius:50%;vertical-align:middle;margin:0 8px}
 
-    h1 {
-      font-size: 52px;
-      line-height: 1.2;
-    }
+/* ─── SECTION BASICS ─── */
+section,.section-block{padding:88px 72px}
+.section-label{font-size:10.5px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+.section-title{font-family:var(--font-display);font-size:clamp(30px,3.8vw,50px);font-weight:300;line-height:1.18;color:var(--charcoal);margin-bottom:18px}
+.section-title em{font-style:italic}
+.section-body{font-size:15.5px;font-weight:300;line-height:1.72;color:var(--charcoal-mid);max-width:540px}
+.gold-line{width:44px;height:2px;background:var(--gold);margin:28px 0}
 
-    h2 {
-      font-size: 36px;
-    }
+/* ─── PROBLEM ─── */
+.problem-section{background:var(--charcoal);padding:88px 72px}
+.problem-section .section-label{color:var(--gold)}
+.problem-section .section-title{color:var(--white)}
+.problem-section .section-body{color:rgba(255,255,255,.65)}
+.problem-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-top:48px;background:rgba(255,255,255,.06)}
+.problem-item{background:var(--charcoal);padding:36px 32px;transition:background .3s}
+.problem-item:hover{background:#222}
+.problem-item-num{font-family:var(--font-display);font-size:44px;font-weight:300;color:var(--gold);opacity:.35;line-height:1;margin-bottom:14px}
+.problem-item-title{font-size:14px;font-weight:500;color:var(--white);margin-bottom:8px}
+.problem-item-desc{font-size:13.5px;font-weight:300;color:rgba(255,255,255,.5);line-height:1.65}
 
-    .hero {
-      padding: 120px 0;
-    }
+/* ─── SOLUTIONS GRID ─── */
+.solutions-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid rgba(28,28,28,.09);margin-top:56px}
+.sol-card{padding:40px 30px;border-right:1px solid rgba(28,28,28,.09);border-bottom:1px solid rgba(28,28,28,.09);transition:background .3s;position:relative;cursor:default}
+.sol-card:nth-child(3n){border-right:none}
+.sol-card:nth-child(n+4){border-bottom:none}
+.sol-card:hover{background:var(--teal-pale)}
+.sol-new{position:absolute;top:14px;right:14px;background:var(--gold);color:var(--white);font-size:8.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px}
+.sol-icon{width:38px;height:38px;background:var(--teal);margin-bottom:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sol-icon svg{width:18px;height:18px;fill:none;stroke:var(--white);stroke-width:1.6}
+.sol-title{font-family:var(--font-display);font-size:20px;font-weight:400;color:var(--charcoal);margin-bottom:10px}
+.sol-desc{font-size:13px;font-weight:300;color:var(--muted);line-height:1.62}
 
-    .sub {
-      font-size: 18px;
-      max-width: 600px;
-      margin-bottom: 40px;
-      color: #cfcfcf;
-    }
+/* ─── CTA BAND ─── */
+.cta-band{background:var(--teal);padding:72px;display:flex;justify-content:space-between;align-items:center;gap:40px}
+.cta-band-title{font-family:var(--font-display);font-size:clamp(26px,3.2vw,46px);font-weight:300;color:var(--white);line-height:1.18}
+.cta-band-title em{font-style:italic}
+.btn-white{background:var(--white);color:var(--teal);padding:13px 32px;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--white);cursor:pointer;transition:all .25s;white-space:nowrap;font-family:var(--font-body)}
+.btn-white:hover{background:transparent;color:var(--white)}
 
-    .cta-group a {
-      margin-right: 15px;
-      text-decoration: none;
-    }
+/* ─── METHOD ─── */
+.method-section{background:var(--sand);padding:88px 72px}
+.method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+.method-step{background:var(--white);padding:36px 28px;position:relative;overflow:hidden;transition:transform .3s var(--ease-out)}
+.method-step:hover{transform:translateY(-4px)}
+.step-letter{font-family:var(--font-display);font-size:80px;font-weight:300;color:var(--teal);opacity:.1;position:absolute;top:12px;right:18px;line-height:1;pointer-events:none}
+.step-num{font-size:10px;font-weight:500;letter-spacing:.15em;color:var(--gold);margin-bottom:10px;text-transform:uppercase}
+.step-name{font-family:var(--font-display);font-size:24px;font-weight:400;color:var(--charcoal);margin-bottom:8px}
+.step-desc{font-size:13px;font-weight:300;color:var(--muted);line-height:1.65}
 
-    .btn-primary {
-      background: #c9a96e;
-      color: #000;
-      padding: 12px 24px;
-      font-weight: 500;
-    }
+/* ─── CASES ─── */
+.cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:56px;background:rgba(28,28,28,.06)}
+.case-card{background:var(--white);padding:44px 36px;transition:background .3s}
+.case-card:hover{background:var(--sand)}
+.case-type{font-size:10.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:18px}
+.case-result{font-family:var(--font-display);font-size:52px;font-weight:300;color:var(--charcoal);line-height:1;margin-bottom:6px}
+.case-result span{font-size:22px}
+.case-metric{font-size:11.5px;font-weight:400;color:var(--muted);margin-bottom:22px;letter-spacing:.04em}
+.case-desc{font-size:13.5px;font-weight:300;color:var(--charcoal-mid);line-height:1.68;border-top:1px solid rgba(28,28,28,.08);padding-top:18px}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);background:var(--charcoal);border:1px solid rgba(255,255,255,.07)}
+.stat-box{padding:44px 36px;text-align:center;border-right:1px solid rgba(255,255,255,.07)}
+.stat-box:last-child{border-right:none}
+.stat-num{font-family:var(--font-display);font-size:52px;font-weight:300;color:var(--gold);line-height:1}
+.stat-label{font-size:12.5px;color:rgba(255,255,255,.5);margin-top:6px}
 
-    .btn-secondary {
-      border: 1px solid #c9a96e;
-      color: #c9a96e;
-      padding: 12px 24px;
-    }
+/* ─── FAQ ─── */
+.faq-hero{background:var(--charcoal);padding:88px 72px}
+.faq-hero .section-label{color:var(--gold)}
+.faq-hero .section-title{color:var(--white)}
+.faq-hero .section-body{color:rgba(255,255,255,.65)}
+.faq-layout{display:grid;grid-template-columns:2fr 1fr;align-items:start}
+.faq-main{padding:64px 72px;border-right:1px solid rgba(28,28,28,.08)}
+.faq-sidebar{padding:64px 44px;background:var(--sand);position:sticky;top:68px}
+.faq-category{margin-bottom:48px}
+.faq-cat-label{font-size:10.5px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid rgba(28,28,28,.08)}
+.faq-item{border-bottom:1px solid rgba(28,28,28,.07)}
+.faq-question{display:flex;justify-content:space-between;align-items:flex-start;padding:18px 0;cursor:pointer;gap:14px}
+.faq-q-text{font-family:var(--font-display);font-size:19px;font-weight:400;color:var(--charcoal);line-height:1.3;flex:1;transition:color .2s}
+.faq-question:hover .faq-q-text{color:var(--teal)}
+.faq-icon{width:22px;height:22px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid rgba(28,28,28,.18);transition:all .3s;margin-top:3px}
+.faq-icon svg{width:10px;height:10px;stroke:var(--charcoal);fill:none;stroke-width:2;transition:transform .3s}
+.faq-item.open .faq-icon{background:var(--teal);border-color:var(--teal)}
+.faq-item.open .faq-icon svg{stroke:var(--white);transform:rotate(45deg)}
+.faq-answer{max-height:0;overflow:hidden;transition:max-height .4s var(--ease-out)}
+.faq-item.open .faq-answer{max-height:600px}
+.faq-answer-inner{padding:0 0 22px;font-size:14px;font-weight:300;color:var(--charcoal-mid);line-height:1.78}
+.faq-answer-inner p{margin-bottom:10px}
+.faq-answer-inner p:last-child{margin-bottom:0}
+.sidebar-topics{display:flex;flex-direction:column}
+.sidebar-topic{padding:11px 0;border-bottom:1px solid rgba(28,28,28,.07);font-size:13px;font-weight:400;color:var(--charcoal-mid);cursor:pointer;display:flex;align-items:center;gap:10px;transition:color .2s}
+.sidebar-topic:hover,.sidebar-topic.active-topic{color:var(--teal);font-weight:500}
+.sidebar-topic-dot{width:3px;height:3px;background:var(--gold);border-radius:50%;flex-shrink:0}
+.sidebar-cta{background:var(--teal);padding:28px;margin-top:36px}
+.sidebar-cta-title{font-family:var(--font-display);font-size:21px;font-weight:300;color:var(--white);margin-bottom:10px;line-height:1.3}
+.sidebar-cta-body{font-size:13px;font-weight:300;color:rgba(255,255,255,.7);line-height:1.62;margin-bottom:18px}
+.sidebar-cta-btn{background:var(--white);color:var(--teal);padding:10px 18px;font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;border:none;cursor:pointer;width:100%;transition:all .2s;font-family:var(--font-body)}
+.sidebar-cta-btn:hover{background:var(--gold);color:var(--white)}
 
-    .section {
-      padding: 100px 0;
-      border-top: 1px solid #1a1a1a;
-    }
+/* ─── ABOUT ─── */
+.about-section{display:grid;grid-template-columns:1fr 1fr;min-height:88vh}
+.about-left{background:var(--teal);padding:72px 56px;display:flex;flex-direction:column;justify-content:center}
+.about-left .section-label{color:var(--gold)}
+.about-left .section-title{color:var(--white)}
+.about-left .section-body{color:rgba(255,255,255,.75)}
+.about-values{display:flex;flex-direction:column;gap:14px;margin-top:36px}
+.value-item{display:flex;align-items:flex-start;gap:14px;padding:18px;background:rgba(255,255,255,.08);transition:background .3s}
+.value-item:hover{background:rgba(255,255,255,.13)}
+.value-dot{width:3px;height:3px;background:var(--gold);border-radius:50%;margin-top:9px;flex-shrink:0}
+.value-text{font-size:13px;font-weight:300;color:rgba(255,255,255,.8);line-height:1.65}
+.about-right{background:var(--sand);padding:72px 56px;display:flex;flex-direction:column;justify-content:center}
+.profile-photo{width:100%;aspect-ratio:4/5;overflow:hidden;margin-bottom:28px}
+.profile-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;filter:saturate(.92)}
+.profile-name{font-family:var(--font-display);font-size:30px;font-weight:400;color:var(--charcoal);margin-bottom:4px}
+.profile-role{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+.profile-bio{font-size:14px;font-weight:300;color:var(--charcoal-mid);line-height:1.72;margin-bottom:22px}
+.profile-links{display:flex;gap:10px;flex-wrap:wrap}
+.profile-link{display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:400;color:var(--teal);letter-spacing:.03em;text-decoration:none;padding:8px 14px;border:1px solid var(--teal);transition:all .2s}
+.profile-link:hover{background:var(--teal);color:var(--white)}
+.profile-link svg{width:13px;height:13px;fill:currentColor;flex-shrink:0}
 
-    .grid {
-      display: grid;
-      gap: 30px;
-    }
+/* ─── CONTACT ─── */
+.contact-section{background:var(--white);display:grid;grid-template-columns:1fr 1fr;min-height:88vh}
+.contact-left{padding:72px 56px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid rgba(28,28,28,.08)}
+.contact-right{padding:72px 56px;background:var(--sand)}
+.form-group{margin-bottom:20px}
+.form-label{font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--charcoal-mid);display:block;margin-bottom:7px}
+.form-input{width:100%;padding:11px 14px;border:1px solid rgba(28,28,28,.13);background:var(--white);font-family:var(--font-body);font-size:13.5px;font-weight:300;color:var(--charcoal);outline:none;transition:border-color .2s}
+.form-input:focus{border-color:var(--teal)}
+select.form-input{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237A7A7A'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+textarea.form-input{resize:vertical;min-height:88px;line-height:1.6}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-submit{width:100%;background:var(--teal);color:var(--white);padding:14px;font-family:var(--font-body);font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;border:none;cursor:pointer;margin-top:6px;transition:background .25s}
+.form-submit:hover{background:var(--teal-dark)}
+.contact-info{margin-top:36px;display:flex;flex-direction:column;gap:0}
+.contact-item{padding:16px 0;border-bottom:1px solid rgba(28,28,28,.07)}
+.contact-item:last-child{border-bottom:none}
+.c-label{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px}
+.c-value{font-size:14.5px;font-weight:300;color:var(--charcoal)}
+.c-value a{color:var(--teal);text-decoration:none}
+.c-value a:hover{text-decoration:underline}
+.channel-btns{display:flex;flex-direction:column;gap:10px;margin-top:28px}
+.channel-btn{display:flex;align-items:center;gap:11px;padding:13px 18px;border:1px solid rgba(28,28,28,.1);background:var(--white);font-family:var(--font-body);font-size:12.5px;font-weight:400;color:var(--charcoal);text-decoration:none;transition:all .2s;cursor:pointer}
+.channel-btn:hover{border-color:var(--teal);color:var(--teal)}
+.channel-btn svg{width:15px;height:15px;flex-shrink:0}
+.success-msg{display:none;background:var(--teal-pale);border:1px solid var(--teal);padding:14px 18px;margin-top:12px;font-size:13.5px;color:var(--teal);font-weight:400}
+.success-msg.show{display:block}
 
-    .services {
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    }
+/* ─── SOLUTIONS PAGE ─── */
+.service-split{display:grid;grid-template-columns:1fr 1fr}
+.service-pane{padding:64px 56px;border-right:1px solid rgba(28,28,28,.07);border-bottom:1px solid rgba(28,28,28,.07)}
+.service-pane:nth-child(2n){border-right:none;background:var(--sand)}
+.service-pane:nth-child(2n-1){background:var(--white)}
+.service-pane:nth-last-child(-n+2){border-bottom:none}
+.service-num{font-size:10px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:10px}
+.service-title{font-family:var(--font-display);font-size:32px;font-weight:300;color:var(--charcoal);margin-bottom:20px}
+.service-title em{font-style:italic}
+.service-block{margin-bottom:18px}
+.service-block-label{font-size:12px;font-weight:500;color:var(--charcoal);margin-bottom:5px}
+.service-block-text{font-size:13.5px;font-weight:300;color:var(--muted);line-height:1.68}
+.service-new-tag{display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:var(--white);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;margin-bottom:14px}
 
-    .card {
-      border: 1px solid #1a1a1a;
-      padding: 30px;
-    }
+/* ─── FOOTER ─── */
+footer{background:var(--charcoal);padding:60px 72px 36px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px}
+.footer-brand{font-family:var(--font-display);font-size:24px;font-weight:400;color:var(--white);margin-bottom:4px}
+.footer-brand span{color:var(--gold)}
+.footer-domain{font-size:11.5px;font-weight:300;color:rgba(255,255,255,.25);letter-spacing:.03em;margin-bottom:14px}
+.footer-desc{font-size:12.5px;font-weight:300;color:rgba(255,255,255,.45);line-height:1.72;max-width:310px}
+.footer-heading{font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:18px}
+.footer-links{display:flex;flex-direction:column;gap:11px}
+.footer-links a{font-size:12.5px;font-weight:300;color:rgba(255,255,255,.6);text-decoration:none;cursor:pointer;transition:color .2s}
+.footer-links a:hover{color:var(--gold)}
+.footer-contact-item{margin-bottom:14px}
+.footer-contact-label{font-size:9.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:3px}
+.footer-contact-value{font-size:12.5px;font-weight:300;color:rgba(255,255,255,.6)}
+.footer-contact-value a{color:rgba(255,255,255,.6);text-decoration:none;transition:color .2s}
+.footer-contact-value a:hover{color:var(--gold)}
+.footer-bottom{background:var(--charcoal);padding:20px 72px;border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;align-items:center;gap:20px}
+.footer-copy{font-size:11.5px;font-weight:300;color:rgba(255,255,255,.28);letter-spacing:.03em}
 
-    .metric {
-      color: #c9a96e;
-      font-size: 20px;
-      margin: 10px 0;
-    }
-
-    .case-grid {
-      display: grid;
-      gap: 30px;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    }
-
-    .footer {
-      padding: 60px 0;
-      text-align: center;
-      font-size: 14px;
-      color: #777;
-    }
-  </style>
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .hero{grid-template-columns:1fr}
+  .hero-right{display:none}
+  .hero-left{padding:48px 28px;border-right:none}
+  section,.section-block,.problem-section,.method-section,.faq-hero,.faq-main,.faq-sidebar,.about-left,.about-right,.contact-left,.contact-right,.cta-band,footer,.footer-bottom{padding-left:24px;padding-right:24px}
+  .problem-grid,.solutions-grid,.method-grid,.cases-grid,.stats-row,.service-split,.about-section,.contact-section{grid-template-columns:1fr}
+  .solutions-grid .sol-card{border-right:none}
+  .stats-row .stat-box{border-right:none;border-bottom:1px solid rgba(255,255,255,.07)}
+  .stats-row .stat-box:last-child{border-bottom:none}
+  .faq-layout{grid-template-columns:1fr}
+  .faq-sidebar{position:static}
+  .service-pane{border-right:none}
+  footer{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center;gap:6px}
+  .cta-band{flex-direction:column;text-align:center}
+  .form-row{grid-template-columns:1fr}
+  .hero-title{font-size:36px}
+}
+</style>
 </head>
-
 <body>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="container">
-
-    <h1>
-      We engineer profitable hospitality operations.
-    </h1>
-
-    <p class="sub">
-      Strategic advisory for property owners and operators seeking measurable growth, operational clarity, and elevated guest experience systems.
-    </p>
-
-    <div class="cta-group">
-      <a href="#contact" class="btn-primary">Request Advisory</a>
-      <a href="#cases" class="btn-secondary">View Case Studies</a>
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-logo" onclick="showPage('home')">Escalante<span>Strategic</span></div>
+  <div class="nav-links">
+    <a onclick="showPage('home')" data-key="nav-home">Home</a>
+    <a onclick="showPage('solutions')" data-key="nav-solutions">Solutions</a>
+    <a onclick="showPage('methodology')" data-key="nav-method">Methodology</a>
+    <a onclick="showPage('cases')" data-key="nav-cases">Cases</a>
+    <a onclick="showPage('faq')" data-key="nav-faq">FAQ</a>
+    <a onclick="showPage('about')" data-key="nav-about">About</a>
+    <a onclick="showPage('contact')" data-key="nav-contact">Contact</a>
+  </div>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('es')">ES</button>
     </div>
-
+    <button class="nav-cta" onclick="showPage('contact')" data-key="nav-cta">Strategy Audit</button>
   </div>
-</section>
-
-<!-- POSITIONING -->
-<section class="section">
-  <div class="container">
-
-    <h2>Advisory Focus</h2>
-
-    <p class="sub">
-      We operate at the intersection of revenue optimization, operational systems, and guest experience design — transforming fragmented operations into structured, scalable assets.
-    </p>
-
+  <div class="hamburger" onclick="toggleMobile()" id="hamburger">
+    <span></span><span></span><span></span>
   </div>
-</section>
+</nav>
 
-<!-- SERVICES -->
-<section class="section">
-  <div class="container">
+<div class="mobile-menu" id="mobile-menu">
+  <a onclick="showPage('home');closeMobile()" data-key="nav-home">Home</a>
+  <a onclick="showPage('solutions');closeMobile()" data-key="nav-solutions">Solutions</a>
+  <a onclick="showPage('methodology');closeMobile()" data-key="nav-method">Methodology</a>
+  <a onclick="showPage('cases');closeMobile()" data-key="nav-cases">Cases</a>
+  <a onclick="showPage('faq');closeMobile()" data-key="nav-faq">FAQ</a>
+  <a onclick="showPage('about');closeMobile()" data-key="nav-about">About</a>
+  <a onclick="showPage('contact');closeMobile()" data-key="nav-contact">Contact</a>
+  <div class="m-actions">
+    <div class="m-lang">
+      <button class="active" id="mob-en" onclick="setLang('en')">EN</button>
+      <button id="mob-es" onclick="setLang('es')">ES</button>
+    </div>
+    <button class="m-cta" onclick="showPage('contact');closeMobile()" data-key="nav-cta">Strategy Audit</button>
+  </div>
+</div>
 
-    <h2>Core Services</h2>
+<!-- ══════════ HOME ══════════ -->
+<div id="page-home" class="page active">
 
-    <div class="grid services">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-label" data-key="hero-label">Boutique Hospitality Consultancy</div>
+      <h1 class="hero-title" data-key="hero-title">Scale Your <em>Hospitality Revenue</em> with Precision Strategy</h1>
+      <p class="hero-sub" data-key="hero-sub">We transform underperforming hotels and short-term rentals into high-performing, systemized revenue engines across Colombia, Puerto Rico and Dominican Republic.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="showPage('contact')" data-key="hero-cta1">Book a Strategy Audit</button>
+        <button class="btn-outline" onclick="showPage('cases')" data-key="hero-cta2">View Case Studies</button>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-metrics">
+        <div class="metric-card">
+          <div class="metric-num">+82%</div>
+          <div class="metric-label" data-key="m1">Average Revenue Growth</div>
+          <div class="metric-time" data-key="mt1">within 6 months</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num">+80%</div>
+          <div class="metric-label" data-key="m2">Occupancy Increase</div>
+          <div class="metric-time" data-key="mt2">first season</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num">+4.5★</div>
+          <div class="metric-label" data-key="m3">Review Score Maintained</div>
+          <div class="metric-time" data-key="mt3">consistently</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num">30+</div>
+          <div class="metric-label" data-key="m4">Properties Managed</div>
+          <div class="metric-time" data-key="mt4">across 3 countries</div>
+        </div>
+      </div>
+      <div class="hero-geo">Colombia <span class="gold-dot"></span> Puerto Rico <span class="gold-dot"></span> Dominican Republic</div>
+    </div>
+  </div>
 
-      <div class="card">
-        <h3>Revenue Optimization</h3>
-        <p>
-          Dynamic pricing strategies, channel mix optimization, and demand forecasting to maximize RevPAR and occupancy stability.
-        </p>
+  <div class="problem-section">
+    <div class="section-label" data-key="prob-label">The Problem</div>
+    <h2 class="section-title" data-key="prob-title">Why Most Hospitality Businesses <em>Underperform</em></h2>
+    <p class="section-body" data-key="prob-body">The gap between a property's potential and its performance is rarely about the space. It's about strategy, systems, and positioning.</p>
+    <div class="problem-grid">
+      <div class="problem-item">
+        <div class="problem-item-num">01</div>
+        <div class="problem-item-title" data-key="p1t">Fragmented Distribution</div>
+        <div class="problem-item-desc" data-key="p1d">Low occupancy despite presence on multiple platforms, with no unified channel strategy or pricing logic connecting them.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-item-num">02</div>
+        <div class="problem-item-title" data-key="p2t">Static Pricing</div>
+        <div class="problem-item-desc" data-key="p2d">Flat nightly rates that leave revenue on the table during peak demand and fail to attract guests in slower periods.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-item-num">03</div>
+        <div class="problem-item-title" data-key="p3t">Operational Gaps</div>
+        <div class="problem-item-desc" data-key="p3d">No documented SOPs, inconsistent guest experience, and reactive maintenance eroding reviews and repeat bookings.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-item-num">04</div>
+        <div class="problem-item-title" data-key="p4t">Weak Positioning</div>
+        <div class="problem-item-desc" data-key="p4d">Generic listings with no differentiated identity, competing on price when the opportunity is to compete on value.</div>
+      </div>
+    </div>
+  </div>
+
+  <section style="background:var(--white)">
+    <div class="section-label" data-key="serv-label">Our Services</div>
+    <h2 class="section-title" data-key="serv-title">Six Pillars of <em>Strategic Growth</em></h2>
+    <div class="solutions-grid">
+      <div class="sol-card">
+        <div class="sol-icon"><svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+        <div class="sol-title" data-key="s1t">Revenue Optimization</div>
+        <div class="sol-desc" data-key="s1d">Dynamic pricing, channel mix strategy, and demand-based rate management to maximize RevPAR across your portfolio.</div>
+      </div>
+      <div class="sol-card">
+        <div class="sol-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+        <div class="sol-title" data-key="s2t">Operational Systems</div>
+        <div class="sol-desc" data-key="s2d">SOPs, housekeeping workflows, automated guest communication, and tech-stack integration for scalable operations.</div>
+      </div>
+      <div class="sol-card">
+        <div class="sol-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <div class="sol-title" data-key="s3t">Guest Experience</div>
+        <div class="sol-desc" data-key="s3d">Review engineering, mid-stay check-ins, and post-stay follow-ups to keep your score consistently above 4.5 stars.</div>
+      </div>
+      <div class="sol-card">
+        <div class="sol-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <div class="sol-title" data-key="s4t">Market Positioning</div>
+        <div class="sol-desc" data-key="s4d">Competitive analysis, brand differentiation, and listing optimization to command premium rates in any market.</div>
+      </div>
+      <div class="sol-card">
+        <div class="sol-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <div class="sol-title" data-key="s5t">Listing Copywriting</div>
+        <div class="sol-desc" data-key="s5d">Platform-optimized titles, descriptions, and photo sequencing engineered to convert browsers into bookers on Airbnb, Booking.com, and Expedia.</div>
+      </div>
+      <div class="sol-card">
+        <div class="sol-new" data-key="snew">New</div>
+        <div class="sol-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="sol-title" data-key="s6t">Listing Onboarding</div>
+        <div class="sol-desc" data-key="s6d">We identify the right platforms and guide you step by step through account setup, identity verification, first listing creation, pricing strategy, and a launch foundation built to rank fast.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <h2 class="cta-band-title" data-key="cta-home">Stop guessing.<br><em>Start scaling.</em></h2>
+    <button class="btn-white" onclick="showPage('contact')" data-key="cta-home-btn">Book a Strategy Audit</button>
+  </div>
+</div>
+
+<!-- ══════════ SOLUTIONS ══════════ -->
+<div id="page-solutions" class="page">
+  <section style="background:var(--sand)">
+    <div class="section-label" data-key="sol-page-label">Our Services</div>
+    <h1 class="section-title" data-key="sol-page-title">What We <em>Do</em></h1>
+    <div class="gold-line"></div>
+    <p class="section-body" data-key="sol-page-body">Every engagement is tailored. We diagnose, design, and implement strategies specific to your property's reality and market context.</p>
+  </section>
+  <div class="service-split">
+    <div class="service-pane">
+      <div class="service-num">01</div>
+      <h2 class="service-title">Revenue <em>Optimization</em></h2>
+      <div class="service-block"><div class="service-block-label" data-key="sv-prob">The Problem</div><div class="service-block-text" data-key="sv1-p">Flat pricing and misaligned channel strategy leaving 20–40% of potential revenue uncaptured every month.</div></div>
+      <div class="service-block"><div class="service-block-label" data-key="sv-appr">Our Approach</div><div class="service-block-text" data-key="sv1-a">Demand-based dynamic pricing models, channel mix audits, OTA algorithm optimization, and minimum stay logic calibrated by season and market.</div></div>
+      <div class="service-block"><div class="service-block-label" data-key="sv-out">The Outcome</div><div class="service-block-text" data-key="sv1-o">Average revenue growth of 82% within the first six months of engagement.</div></div>
+    </div>
+    <div class="service-pane">
+      <div class="service-num">02</div>
+      <h2 class="service-title">Operational <em>Systems</em></h2>
+      <div class="service-block"><div class="service-block-label" data-key="sv-prob">The Problem</div><div class="service-block-text" data-key="sv2-p">Operations running on memory rather than systems, creating inconsistency and guest experience failures.</div></div>
+      <div class="service-block"><div class="service-block-label" data-key="sv-appr">Our Approach</div><div class="service-block-text" data-key="sv2-a">Full SOP library design, housekeeping and maintenance workflow automation, PMS and channel manager integration, and team training frameworks.</div></div>
+      <div class="service-block"><div class="service-block-label" data-key="sv-out">The Outcome</div><div class="service-block-text" data-key="sv2-o">A property that runs without constant owner intervention — scalable, delegable, and consistent.</div></div>
+    </div>
+    <div class="service-pane">
+      <div class="service-num">03</div>
+      <h2 class="service-title">Guest <em>Experience</em></h2>
+      <div class="service-block"><div class="service-block-label" data-key="sv-prob">The Problem</div><div class="service-block-text" data-key="sv3-p">Average reviews, low repeat bookings, and no deliberate guest journey — leaving your biggest competitive advantage untapped.</div></div>
+      <div class="service-block"><div class="service-block-label" data-key="sv-appr">Our Approach</div><div class="service-block-text" data-key="sv3-a">Pre-stay communication sequences, mid-stay check-ins to resolve issues before they become reviews, and post-stay follow-ups designed to generate five-star feedback consistently.</div></div>
+      <div class="service-block"><div class="service-block-label" data-key="sv-out">The Outcome</div><div class="service-block-text" data-key="sv3-o">Review scores kept consistently above 4.5 stars and an increase in repeat bookings and direct referrals.</div></div>
+    </div>
+    <div class="service-pane">
+      <div class="service-num">04</div>
+      <h2 class="service-title">Market <em>Positioning</em></h2>
+      <div class="service-block"><div class="service-block-label" data-key="sv-prob">The Problem</div><div class="service-block-text" data-key="sv4-p">Generic listings competing on price in markets where differentiation is the only path to sustainable margins.</div></div>
+      <div class="service-block"><div class="service-block-label" data-key="sv-appr">Our Approach</div><div class="service-block-text" data-key="sv4-a">Competitive landscape analysis, unique value proposition definition, brand identity alignment, and listing copywriting with SEO strategy.</div></div>
+      <div class="service-block"><div class="service-block-label" data-key="sv-out">The Outcome</div><div class="service-block-text" data-key="sv4-o">A property with a clear identity that attracts the right guests at the right price, consistently.</div></div>
+    </div>
+    <div class="service-pane">
+      <div class="service-num">05</div>
+      <h2 class="service-title">Listing <em>Copywriting</em></h2>
+      <div class="service-block"><div class="service-block-label" data-key="sv-prob">The Problem</div><div class="service-block-text" data-key="sv5-p">Most listings describe the property rather than selling the experience, losing bookings to competitors with inferior spaces but better copy.</div></div>
+      <div class="service-block"><div class="service-block-label" data-key="sv-appr">Our Approach</div><div class="service-block-text" data-key="sv5-a">Platform-specific titles and descriptions that hit OTA search algorithms, photo sequence strategy, amenity framing, and SEO-optimized copy for Airbnb, Booking.com, and Expedia in English and Spanish.</div></div>
+      <div class="service-block"><div class="service-block-label" data-key="sv-out">The Outcome</div><div class="service-block-text" data-key="sv5-o">Higher click-through rates, more conversion from views to bookings, and a listing that commands its price without explanation.</div></div>
+    </div>
+    <div class="service-pane" style="position:relative">
+      <div class="service-new-tag" data-key="snew">New Service</div>
+      <div class="service-num">06</div>
+      <h2 class="service-title">Listing <em>Onboarding</em></h2>
+      <div class="service-block"><div class="service-block-label" data-key="sv-who">Who It's For</div><div class="service-block-text" data-key="sv6-w">Property owners who have never listed before, or investors entering the STR market for the first time and need end-to-end guidance.</div></div>
+      <div class="service-block"><div class="service-block-label" data-key="sv-appr">Our Approach</div><div class="service-block-text" data-key="sv6-a">We identify the right platforms for your property and market, then guide you through account setup, identity verification, listing creation, pricing configuration, house rules, and automated messaging.</div></div>
+      <div class="service-block"><div class="service-block-label" data-key="sv-out">The Outcome</div><div class="service-block-text" data-key="sv6-o">A fully built, optimized, and live Airbnb host profile ready to receive and convert bookings from launch.</div></div>
+    </div>
+  </div>
+  <div class="cta-band">
+    <h2 class="cta-band-title" data-key="cta-sol">Ready to transform <em>your property?</em></h2>
+    <button class="btn-white" onclick="showPage('contact')" data-key="cta-sol-btn">Book a Strategy Audit</button>
+  </div>
+</div>
+
+<!-- ══════════ METHODOLOGY ══════════ -->
+<div id="page-methodology" class="page">
+  <div class="method-section">
+    <div class="section-label" data-key="meth-label">Our Process</div>
+    <h1 class="section-title" data-key="meth-title">The <em>ESCALA</em> Method™</h1>
+    <div class="gold-line"></div>
+    <p class="section-body" data-key="meth-body">A proprietary six-phase consulting methodology built on field experience across Latin America and the Caribbean. Applied strategy, not theory.</p>
+    <div class="method-grid">
+      <div class="method-step"><div class="step-letter">E</div><div class="step-num">Phase 01</div><div class="step-name" data-key="ph1n">Evaluate</div><div class="step-desc" data-key="ph1d">Full diagnostic of current performance: occupancy, ADR, RevPAR, review scores, operational gaps, and market positioning relative to competitors.</div></div>
+      <div class="method-step"><div class="step-letter">S</div><div class="step-num">Phase 02</div><div class="step-name" data-key="ph2n">Structure</div><div class="step-desc" data-key="ph2d">Design the operational architecture including SOPs, team roles, tech stack, and communication flows that support sustainable growth.</div></div>
+      <div class="method-step"><div class="step-letter">C</div><div class="step-num">Phase 03</div><div class="step-name" data-key="ph3n">Calibrate</div><div class="step-desc" data-key="ph3d">Fine-tune pricing strategy, channel mix, listing content, and guest experience touchpoints based on real market data.</div></div>
+      <div class="method-step"><div class="step-letter">A</div><div class="step-num">Phase 04</div><div class="step-name" data-key="ph4n">Amplify</div><div class="step-desc" data-key="ph4d">Deploy brand positioning, marketing channels, and review generation systems to increase visibility and attract higher-value guests.</div></div>
+      <div class="method-step"><div class="step-letter">L</div><div class="step-num">Phase 05</div><div class="step-name" data-key="ph5n">Leverage</div><div class="step-desc" data-key="ph5d">Identify expansion opportunities including new units, new markets, and new revenue streams built on the stable operational base we create together.</div></div>
+      <div class="method-step"><div class="step-letter">A</div><div class="step-num">Phase 06</div><div class="step-name" data-key="ph6n">Accelerate</div><div class="step-desc" data-key="ph6d">Continuous optimization, monthly performance reporting, and strategic adjustment to sustain growth and adapt to market shifts.</div></div>
+    </div>
+  </div>
+  <div class="cta-band">
+    <h2 class="cta-band-title" data-key="cta-meth"><em>ESCALA</em> applied to your property.</h2>
+    <button class="btn-white" onclick="showPage('contact')" data-key="cta-meth-btn">Start the Evaluation</button>
+  </div>
+</div>
+
+<!-- ══════════ CASES ══════════ -->
+<div id="page-cases" class="page">
+  <section style="background:var(--white)">
+    <div class="section-label" data-key="cases-label">Results</div>
+    <h1 class="section-title" data-key="cases-title">Measured <em>Impact</em></h1>
+    <div class="gold-line"></div>
+    <p class="section-body" data-key="cases-body">Every case study reflects a real engagement. Numbers are the baseline. The strategy behind them is what we bring.</p>
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="case-type" data-key="c1-type">Boutique Hotel · Puerto Rico</div>
+        <div class="case-result">+82<span>%</span></div>
+        <div class="case-metric" data-key="c1-metric">Revenue growth within 6 months</div>
+        <div class="case-desc" data-key="c1-desc">A 12-room boutique hotel in San Juan with strong location but weak OTA presence and no pricing strategy. We restructured channel management, implemented dynamic pricing, and rewrote all listing content. RevPAR moved from $68 to $97 within three months and continued to grow.</div>
+      </div>
+      <div class="case-card">
+        <div class="case-type" data-key="c2-type">STR Portfolio · Nagua, Dominican Republic</div>
+        <div class="case-result">4.93<span>★</span></div>
+        <div class="case-metric" data-key="c2-metric">Average rating maintained consistently since launch</div>
+        <div class="case-desc" data-key="c2-desc">Full onboarding and launch strategy for a six-unit boutique residence: host profile creation, listing copywriting, automated guest communication, housekeeping SOPs, and seasonal pricing calendar. Launched with the right foundation and ranked in the top tier of its market within 60 days.</div>
+      </div>
+      <div class="case-card">
+        <div class="case-type" data-key="c3-type">STR Management · Santa Marta, Colombia</div>
+        <div class="case-result">+80<span>%</span></div>
+        <div class="case-metric" data-key="c3-metric">Occupancy increase · first season</div>
+        <div class="case-desc" data-key="c3-desc">A coastal property at 44% annual occupancy despite being in a high-demand corridor. We redesigned the pricing calendar, shifted the OTA channel mix, rewrote listings in English and Spanish, and implemented a guest review recovery strategy. Occupancy stabilized at 80%+ within one season.</div>
+      </div>
+    </div>
+  </section>
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-num">30+</div><div class="stat-label" data-key="st1">Properties Served</div></div>
+    <div class="stat-box"><div class="stat-num">3</div><div class="stat-label" data-key="st2">Countries Active</div></div>
+    <div class="stat-box"><div class="stat-num">+4.5★</div><div class="stat-label" data-key="st3">Review Score Maintained</div></div>
+    <div class="stat-box"><div class="stat-num">$2M+</div><div class="stat-label" data-key="st4">Revenue Managed</div></div>
+  </div>
+  <div class="cta-band">
+    <h2 class="cta-band-title" data-key="cta-cases">Your property could be <em>next.</em></h2>
+    <button class="btn-white" onclick="showPage('contact')" data-key="cta-cases-btn">Request a Strategy Audit</button>
+  </div>
+</div>
+
+<!-- ══════════ FAQ ══════════ -->
+<div id="page-faq" class="page">
+  <div class="faq-hero">
+    <div class="section-label" data-key="faq-label">Insights &amp; FAQ</div>
+    <h1 class="section-title" data-key="faq-title">Common Questions, <em>Honest Answers</em></h1>
+    <p class="section-body" data-key="faq-intro">Everything property owners ask about revenue strategy, operations, and what it takes to grow a hospitality business in Latin America and the Caribbean.</p>
+  </div>
+  <div class="faq-layout">
+    <div class="faq-main">
+
+      <div class="faq-category" id="cat-pricing">
+        <div class="faq-cat-label" data-key="fcat1">Pricing &amp; Revenue</div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span class="faq-q-text" data-key="q1">How do I know if my nightly rate is too low or too high?</span>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <p data-key="a1p1">The clearest signal is your occupancy rate relative to your market. Consistently above 85% with calendars booking out weeks ahead? You are likely priced too low. Below 60% with no clear seasonal explanation? Your rate may be misaligned with the value guests perceive.</p>
+            <p data-key="a1p2">The deeper answer requires comparing your ADR against comparable properties in your market. Strong reviews with low occupancy usually points to a visibility or pricing issue. High occupancy with flat income almost always points to rate strategy.</p>
+          </div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span class="faq-q-text" data-key="q2">What is dynamic pricing and do I really need it?</span>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <p data-key="a2p1">Dynamic pricing means adjusting your nightly rate in real time based on demand signals: local events, competitor availability, booking lead time, and seasonal patterns.</p>
+            <p data-key="a2p2">If you are managing more than one unit or generating more than $2,000 per month in rental income, the answer is yes. The revenue difference between static and dynamic pricing typically ranges from 15 to 35% annually. Tools like PriceLabs, Wheelhouse, or DPGO automate most of this, but they still need a human strategy layer to set floors, ceilings, and minimum stay rules correctly.</p>
+          </div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span class="faq-q-text" data-key="q3">How should I handle pricing during periods of lower demand?</span>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <p data-key="a3p1">Dropping rates aggressively to chase occupancy is the most common mistake during slow periods. A smarter approach is a modest rate reduction paired with longer minimum stays to attract extended-trip travelers, combined with platform promotional tools that increase visibility without destroying rate integrity.</p>
+            <p data-key="a3p2">The goal during slow demand is not to fill every night at any price. It is to maintain RevPAR at a level that supports your annual financial targets while protecting the quality of your guest base.</p>
+          </div></div>
+        </div>
       </div>
 
-      <div class="card">
-        <h3>Operational Systems</h3>
-        <p>
-          SOP design, team workflows, and process standardization to eliminate inefficiencies and improve execution consistency.
-        </p>
+      <div class="faq-category" id="cat-ops">
+        <div class="faq-cat-label" data-key="fcat2">Operations &amp; Management</div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span class="faq-q-text" data-key="q4">What is the minimum tech stack a serious STR operator needs?</span>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <p data-key="a4p1">For a single property: a channel manager to sync calendars across platforms, a dynamic pricing tool, and automated messaging templates for pre-arrival, check-in, and review requests. That foundation alone saves 5 to 8 hours per week and reduces double-booking risk to near zero.</p>
+            <p data-key="a4p2">For a portfolio of three or more units: add a property management system with housekeeping task assignment, a unified inbox, and owner reporting.</p>
+          </div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span class="faq-q-text" data-key="q5">How do I manage a property remotely from another country?</span>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <p data-key="a5p1">Remote management works when three things are in place: a reliable local contact with authority to handle guest issues on the ground, documented SOPs so nothing depends on a phone call to you, and smart access technology so check-in never requires physical presence.</p>
+            <p data-key="a5p2">Automated guest messaging handles roughly 80% of guest interactions. The goal is to design a system where your absence is invisible to the guest.</p>
+          </div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span class="faq-q-text" data-key="q6">What should a housekeeping SOP for a short-term rental include?</span>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <p data-key="a6p1">A solid housekeeping SOP covers four areas: a room-by-room cleaning checklist with photos of the expected final state, an inventory list for consumables and linens, a damage and incident reporting protocol, and a time estimate per unit type for accurate scheduling.</p>
+            <p data-key="a6p2">The detail most operators miss is the guest-ready final walkthrough: a five-minute check from the guest's perspective. These are the details that move a property from 4.6 to 4.9 on any platform.</p>
+          </div></div>
+        </div>
       </div>
 
-      <div class="card">
-        <h3>Guest Experience Engineering</h3>
-        <p>
-          End-to-end guest journey design, communication systems, and review optimization to elevate ratings and retention.
-        </p>
+      <div class="faq-category" id="cat-growth">
+        <div class="faq-cat-label" data-key="fcat3">Growth &amp; Strategy</div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span class="faq-q-text" data-key="q7">When is the right time to hire a property manager or consultant?</span>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <p data-key="a7p1">The right time is before you need one, not after the problems have already cost you reviews and revenue. Consider professional help when you are spending more than 10 hours per week on operations, your review score has stagnated below 4.5, occupancy has plateaued for two consecutive seasons, or you are about to add a second property.</p>
+          </div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span class="faq-q-text" data-key="q8">Is it worth listing on multiple platforms, or should I focus on Airbnb?</span>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <p data-key="a8p1">Multi-platform distribution is almost always worth it, but only when you have a channel manager in place to eliminate double-booking risk. Airbnb leads in most Latin American and Caribbean markets, but Booking.com captures a significant share of European and domestic travelers who never open the Airbnb app.</p>
+            <p data-key="a8p2">The typical revenue lift from adding Booking.com to an Airbnb-only property is 8 to 15% in additional occupancy. Each platform has its own algorithm, cancellation policy, and guest profile. A platform-specific strategy is necessary.</p>
+          </div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span class="faq-q-text" data-key="q9">How do I improve my review score from 4.6 to 4.9?</span>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <p data-key="a9p1">The gap between 4.6 and 4.9 is almost never about the physical property. It is about expectation management and operational consistency.</p>
+            <p data-key="a9p2">The three highest-leverage changes: audit your listing photos and description against the actual experience. Send a mid-stay check-in message that invites guests to flag anything before it becomes a review. And systematize your cleaning and setup so the experience is identical every single turnover. Consistency is what separates 4.6 from 4.9, not a renovation.</p>
+          </div></div>
+        </div>
       </div>
 
-      <div class="card">
-        <h3>Portfolio Scaling</h3>
-        <p>
-          Expansion frameworks, multi-property coordination, and system replication for sustainable growth.
-        </p>
+      <div class="faq-category" id="cat-consulting">
+        <div class="faq-cat-label" data-key="fcat4">Working with Escalante Strategic</div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span class="faq-q-text" data-key="q10">What does a Strategy Audit include?</span>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <p data-key="a10p1">A Strategy Audit is a 30-day diagnostic engagement covering revenue analysis (occupancy, ADR, RevPAR versus market benchmarks), listing audit (copy, photos, SEO positioning), channel mix review, operational gap assessment, and guest experience evaluation.</p>
+            <p data-key="a10p2">The deliverable is a written strategic report with specific, ranked recommendations. Most clients see measurable improvement within 60 days of starting implementation.</p>
+          </div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span class="faq-q-text" data-key="q11">Do you work with property owners outside of Latin America?</span>
+            <div class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <p data-key="a11p1">Yes. Our clients include property owners based in the United States, Europe, and Canada who own or are acquiring assets in Colombia, Puerto Rico, or the Dominican Republic. We operate entirely in English or Spanish, across time zones, with both asynchronous and live session formats.</p>
+          </div></div>
+        </div>
       </div>
 
     </div>
-
-  </div>
-</section>
-
-<!-- CASES -->
-<section class="section" id="cases">
-  <div class="container">
-
-    <h2>Selected Engagements</h2>
-
-    <div class="case-grid">
-
-      <div class="card">
-        <h3>Puerto Rico Portfolio</h3>
-        <p class="metric">48% → 82% Occupancy</p>
-        <p>60 days · Pricing + operations restructuring</p>
+    <div class="faq-sidebar">
+      <div style="font-size:10px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:16px" data-key="faq-browse">Browse by Topic</div>
+      <div class="sidebar-topics">
+        <div class="sidebar-topic active-topic" onclick="scrollToFaq('cat-pricing',this)"><div class="sidebar-topic-dot"></div><span data-key="fcat1">Pricing &amp; Revenue</span></div>
+        <div class="sidebar-topic" onclick="scrollToFaq('cat-ops',this)"><div class="sidebar-topic-dot"></div><span data-key="fcat2">Operations &amp; Management</span></div>
+        <div class="sidebar-topic" onclick="scrollToFaq('cat-growth',this)"><div class="sidebar-topic-dot"></div><span data-key="fcat3">Growth &amp; Strategy</span></div>
+        <div class="sidebar-topic" onclick="scrollToFaq('cat-consulting',this)"><div class="sidebar-topic-dot"></div><span data-key="fcat4-s">Working with Us</span></div>
       </div>
-
-      <div class="card">
-        <h3>Colombia Urban Units</h3>
-        <p class="metric">+67% Revenue Growth</p>
-        <p>4 months · Channel + demand optimization</p>
+      <div class="sidebar-cta">
+        <div class="sidebar-cta-title" data-key="faq-sc-title">Still have questions?</div>
+        <p class="sidebar-cta-body" data-key="faq-sc-body">Every property is different. Book a call and we will give you specific answers for your situation.</p>
+        <button class="sidebar-cta-btn" onclick="showPage('contact')" data-key="faq-sc-btn">Book a Free Call</button>
       </div>
-
-      <div class="card">
-        <h3>Dominican Republic</h3>
-        <p class="metric">4.1★ → 4.6★ Rating</p>
-        <p>Guest experience system implementation</p>
-      </div>
-
     </div>
-
   </div>
-</section>
-
-<!-- DIFFERENTIATION -->
-<section class="section">
-  <div class="container">
-
-    <h2>Approach</h2>
-
-    <p class="sub">
-      We do not provide generic recommendations. Each engagement is structured around data, operational diagnostics, and execution frameworks designed for immediate implementation.
-    </p>
-
+  <div class="cta-band">
+    <h2 class="cta-band-title" data-key="cta-faq">Ready for <em>specific answers?</em></h2>
+    <button class="btn-white" onclick="showPage('contact')" data-key="cta-faq-btn">Request a Strategy Audit</button>
   </div>
-</section>
+</div>
 
-<!-- CTA -->
-<section class="section" id="contact">
-  <div class="container">
-
-    <h2>Request Advisory</h2>
-
-    <p class="sub">
-      Engagements are limited and selective. Share your property details to evaluate fit and potential impact.
-    </p>
-
-    <a href="mailto:contact@escalantestrategic.com" class="btn-primary">
-      contact@escalantestrategic.com
-    </a>
-
+<!-- ══════════ ABOUT ══════════ -->
+<div id="page-about" class="page">
+  <div class="about-section">
+    <div class="about-left">
+      <div class="section-label" data-key="about-label">About</div>
+      <h1 class="section-title" data-key="about-title">Built from the <em>Field,</em> Not the Classroom</h1>
+      <div class="gold-line" style="background:var(--gold)"></div>
+      <p class="section-body" data-key="about-body">Escalante Strategic was founded on a simple premise: hospitality consulting should be practiced by people who actually manage properties.</p>
+      <div class="about-values">
+        <div class="value-item"><div class="value-dot"></div><div class="value-text"><strong style="color:white;font-weight:500" data-key="val1h">Boutique focus.</strong> <span data-key="val1b">We work with a select number of clients at any time — enough to deliver real attention, not scaled mediocrity.</span></div></div>
+        <div class="value-item"><div class="value-dot"></div><div class="value-text"><strong style="color:white;font-weight:500" data-key="val2h">Field-tested methodology.</strong> <span data-key="val2b">Método ESCALA™ was built through real engagements across three countries, not borrowed from corporate consulting frameworks.</span></div></div>
+        <div class="value-item"><div class="value-dot"></div><div class="value-text"><strong style="color:white;font-weight:500" data-key="val3h">Bilingual by design.</strong> <span data-key="val3b">We operate natively in English and Spanish across Latin America and the Caribbean.</span></div></div>
+        <div class="value-item"><div class="value-dot"></div><div class="value-text"><strong style="color:white;font-weight:500" data-key="val4h">Results first.</strong> <span data-key="val4b">Every engagement is measured. No vanity metrics, only numbers that affect your bottom line.</span></div></div>
+      </div>
+    </div>
+    <div class="about-right">
+      <div class="profile-photo">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='500' viewBox='0 0 400 500'%3E%3Crect width='400' height='500' fill='%23E8DDD0'/%3E%3Ccircle cx='200' cy='180' r='80' fill='%23C9A84C' opacity='.25'/%3E%3Cellipse cx='200' cy='420' rx='120' ry='80' fill='%231A5C55' opacity='.18'/%3E%3C/svg%3E" alt="Jessica Escalante, Founder &amp; CEO" style="background:var(--sand-dark)">
+      </div>
+      <div class="profile-name">Jessica Escalante</div>
+      <div class="profile-role" data-key="profile-role">Founder &amp; CEO</div>
+      <p class="profile-bio" data-key="profile-bio">Hospitality and tourism business administrator with a specialization in financial management. Founder of Escalante Strategic and creator of Método ESCALA™, built through direct property management across Colombia, Puerto Rico, and the Dominican Republic. She also serves as Director of Guest Services and Technology for Rosalina Boutique Hotels in Puerto Rico.</p>
+      <div class="profile-links">
+        <a class="profile-link" href="https://www.linkedin.com/in/jessica-escalante-99882b11b/" target="_blank"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a>
+        <a class="profile-link" href="https://wa.me/573192383030" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>WhatsApp</a>
+      </div>
+    </div>
   </div>
-</section>
+</div>
+
+<!-- ══════════ CONTACT ══════════ -->
+<div id="page-contact" class="page">
+  <div class="contact-section">
+    <div class="contact-left">
+      <div class="section-label" data-key="con-label">Contact</div>
+      <h1 class="section-title" data-key="con-title">Request a <em>Strategy Audit</em></h1>
+      <div class="gold-line"></div>
+      <p class="section-body" data-key="con-body">Tell us about your property. We review every submission and respond within 48 business hours.</p>
+      <div class="contact-info">
+        <div class="contact-item"><span class="c-label" data-key="ci1l">Email</span><span class="c-value"><a href="mailto:contact@escalantestrategic.com">contact@escalantestrategic.com</a></span></div>
+        <div class="contact-item"><span class="c-label" data-key="ci2l">WhatsApp Business</span><span class="c-value"><a href="https://wa.me/573192383030" target="_blank">+57 319 238 3030</a></span></div>
+        <div class="contact-item"><span class="c-label" data-key="ci3l">LinkedIn</span><span class="c-value"><a href="https://www.linkedin.com/in/jessica-escalante-99882b11b/" target="_blank">Jessica Escalante</a></span></div>
+        <div class="contact-item"><span class="c-label" data-key="ci4l">Primary Markets</span><span class="c-value" data-key="ci4v">Colombia · Puerto Rico · Dominican Republic</span></div>
+        <div class="contact-item"><span class="c-label" data-key="ci5l">Languages</span><span class="c-value">English · Español</span></div>
+      </div>
+      <div class="channel-btns">
+        <a class="channel-btn" href="https://wa.me/573192383030" target="_blank">
+          <svg viewBox="0 0 24 24" fill="var(--teal)"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          <span data-key="ch-wa">Write us on WhatsApp Business</span>
+        </a>
+        <a class="channel-btn" href="mailto:contact@escalantestrategic.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          contact@escalantestrategic.com
+        </a>
+        <a class="channel-btn" href="https://www.linkedin.com/in/jessica-escalante-99882b11b/" target="_blank">
+          <svg viewBox="0 0 24 24" fill="var(--teal)"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          <span data-key="ch-li">Connect on LinkedIn</span>
+        </a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <div class="form-group">
+        <label class="form-label" data-key="fl-type">Property Type</label>
+        <select class="form-input" id="f-type">
+          <option value="" data-key="fl-sel">Select type...</option>
+          <option data-key="fl-t1">Boutique Hotel (1–30 rooms)</option>
+          <option data-key="fl-t2">Short-Term Rental Portfolio</option>
+          <option data-key="fl-t3">Single STR Property</option>
+          <option data-key="fl-t4">Hostel / Guesthouse</option>
+          <option data-key="fl-t5">Starting from zero (Listing Onboarding)</option>
+          <option data-key="fl-t6">Other</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" data-key="fl-units">Number of Units</label>
+          <input class="form-input" type="number" id="f-units" placeholder="e.g. 6" min="1">
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-key="fl-rev">Monthly Revenue (USD)</label>
+          <select class="form-input" id="f-rev">
+            <option value="" data-key="fl-sel">Select range...</option>
+            <option data-key="fl-r0">Not yet generating revenue</option>
+            <option data-key="fl-r1">Under $2,000</option>
+            <option data-key="fl-r2">$2,000 to $5,000</option>
+            <option data-key="fl-r3">$5,000 to $15,000</option>
+            <option data-key="fl-r4">$15,000 to $50,000</option>
+            <option data-key="fl-r5">$50,000+</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" data-key="fl-challenge">Main Challenge</label>
+        <textarea class="form-input" id="f-challenge" data-placeholder-en="Describe your biggest revenue or operational challenge..." data-placeholder-es="Describe tu mayor desafío de ingresos u operativo..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label" data-key="fl-budget">Budget for Consulting</label>
+        <select class="form-input" id="f-budget">
+          <option value="" data-key="fl-sel">Select range...</option>
+          <option data-key="fl-b1">Under $500/mo</option>
+          <option data-key="fl-b2">$500 to $1,500/mo</option>
+          <option data-key="fl-b3">$1,500 to $3,000/mo</option>
+          <option data-key="fl-b4">$3,000+/mo</option>
+          <option data-key="fl-b5">Project-based (one-time)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" data-key="fl-name">Your Name</label>
+        <input class="form-input" type="text" id="f-name" data-placeholder-en="Full name" data-placeholder-es="Nombre completo">
+      </div>
+      <div class="form-group">
+        <label class="form-label" data-key="fl-email">Email Address</label>
+        <input class="form-input" type="email" id="f-email" data-placeholder-en="your@email.com" data-placeholder-es="tu@email.com">
+      </div>
+      <button class="form-submit" onclick="submitForm()" data-key="fl-submit">Request Strategy Audit</button>
+      <div class="success-msg" id="success-msg" data-key="fl-success">✓ Thank you! We'll respond within 48 business hours.</div>
+    </div>
+  </div>
+</div>
 
 <!-- FOOTER -->
-<footer class="footer">
-  Escalante Strategic © 2026 · Advisory for Hospitality Growth
+<footer>
+  <div>
+    <div class="footer-brand">Escalante<span>Strategic</span></div>
+    <div class="footer-domain">escalantestrategic.com</div>
+    <p class="footer-desc" data-key="footer-desc">Boutique hospitality consulting across Colombia, Puerto Rico, and the Dominican Republic. Built on field experience, powered by Método ESCALA™.</p>
+  </div>
+  <div>
+    <div class="footer-heading" data-key="footer-nav">Navigation</div>
+    <div class="footer-links">
+      <a onclick="showPage('home')" data-key="nav-home">Home</a>
+      <a onclick="showPage('solutions')" data-key="nav-solutions">Solutions</a>
+      <a onclick="showPage('methodology')" data-key="nav-method">Methodology</a>
+      <a onclick="showPage('cases')" data-key="nav-cases">Cases</a>
+      <a onclick="showPage('faq')" data-key="nav-faq">FAQ &amp; Insights</a>
+      <a onclick="showPage('about')" data-key="nav-about">About</a>
+      <a onclick="showPage('contact')" data-key="nav-contact">Contact</a>
+    </div>
+  </div>
+  <div>
+    <div class="footer-heading" data-key="footer-contact">Contact</div>
+    <div class="footer-contact-item"><div class="footer-contact-label">Email</div><div class="footer-contact-value"><a href="mailto:contact@escalantestrategic.com">contact@escalantestrategic.com</a></div></div>
+    <div class="footer-contact-item"><div class="footer-contact-label">WhatsApp</div><div class="footer-contact-value"><a href="https://wa.me/573192383030" target="_blank">+57 319 238 3030</a></div></div>
+    <div class="footer-contact-item"><div class="footer-contact-label">LinkedIn</div><div class="footer-contact-value"><a href="https://www.linkedin.com/in/jessica-escalante-99882b11b/" target="_blank">Jessica Escalante</a></div></div>
+  </div>
 </footer>
+<div class="footer-bottom">
+  <span class="footer-copy">© 2026 Escalante Strategic · Método ESCALA™ · escalantestrategic.com</span>
+  <span class="footer-copy">Colombia · Puerto Rico · Dominican Republic</span>
+</div>
 
+<script>
+// ─── TRANSLATIONS ───
+const T = {
+  en: {
+    'nav-home':'Home','nav-solutions':'Solutions','nav-method':'Methodology','nav-cases':'Cases','nav-faq':'FAQ','nav-about':'About','nav-contact':'Contact','nav-cta':'Strategy Audit',
+    'hero-label':'Boutique Hospitality Consultancy',
+    'hero-title':'Scale Your <em>Hospitality Revenue</em> with Precision Strategy',
+    'hero-sub':'We transform underperforming hotels and short-term rentals into high-performing, systemized revenue engines across Colombia, Puerto Rico and Dominican Republic.',
+    'hero-cta1':'Book a Strategy Audit','hero-cta2':'View Case Studies',
+    'm1':'Average Revenue Growth','mt1':'within 6 months',
+    'm2':'Occupancy Increase','mt2':'first season',
+    'm3':'Review Score Maintained','mt3':'consistently',
+    'm4':'Properties Managed','mt4':'across 3 countries',
+    'prob-label':'The Problem',
+    'prob-title':'Why Most Hospitality Businesses <em>Underperform</em>',
+    'prob-body':"The gap between a property's potential and its performance is rarely about the space. It's about strategy, systems, and positioning.",
+    'p1t':'Fragmented Distribution','p1d':'Low occupancy despite presence on multiple platforms, with no unified channel strategy or pricing logic connecting them.',
+    'p2t':'Static Pricing','p2d':'Flat nightly rates that leave revenue on the table during peak demand and fail to attract guests in slower periods.',
+    'p3t':'Operational Gaps','p3d':'No documented SOPs, inconsistent guest experience, and reactive maintenance eroding reviews and repeat bookings.',
+    'p4t':'Weak Positioning','p4d':'Generic listings with no differentiated identity, competing on price when the opportunity is to compete on value.',
+    'serv-label':'Our Services','serv-title':'Six Pillars of <em>Strategic Growth</em>',
+    's1t':'Revenue Optimization','s1d':'Dynamic pricing, channel mix strategy, and demand-based rate management to maximize RevPAR across your portfolio.',
+    's2t':'Operational Systems','s2d':'SOPs, housekeeping workflows, automated guest communication, and tech-stack integration for scalable operations.',
+    's3t':'Guest Experience','s3d':'Review engineering, mid-stay check-ins, and post-stay follow-ups to keep your score consistently above 4.5 stars.',
+    's4t':'Market Positioning','s4d':'Competitive analysis, brand differentiation, and listing optimization to command premium rates in any market.',
+    's5t':'Listing Copywriting','s5d':'Platform-optimized titles, descriptions, and photo sequencing engineered to convert browsers into bookers on Airbnb, Booking.com, and Expedia.',
+    's6t':'Listing Onboarding','s6d':'We identify the right platforms and guide you step by step through account setup, identity verification, first listing creation, pricing strategy, and a launch foundation built to rank fast.',
+    'snew':'New','cta-home':'Stop guessing.<br><em>Start scaling.</em>','cta-home-btn':'Book a Strategy Audit',
+    'sol-page-label':'Our Services','sol-page-title':'What We <em>Do</em>',
+    'sol-page-body':"Every engagement is tailored. We diagnose, design, and implement strategies specific to your property's reality and market context.",
+    'sv-prob':'The Problem','sv-appr':'Our Approach','sv-out':'The Outcome','sv-who':"Who It's For",
+    'sv1-p':'Flat pricing and misaligned channel strategy leaving 20–40% of potential revenue uncaptured every month.',
+    'sv1-a':'Demand-based dynamic pricing models, channel mix audits, OTA algorithm optimization, and minimum stay logic calibrated by season and market.',
+    'sv1-o':'Average revenue growth of 82% within the first six months of engagement.',
+    'sv2-p':'Operations running on memory rather than systems, creating inconsistency and guest experience failures.',
+    'sv2-a':'Full SOP library design, housekeeping and maintenance workflow automation, PMS and channel manager integration, and team training frameworks.',
+    'sv2-o':'A property that runs without constant owner intervention — scalable, delegable, and consistent.',
+    'sv3-p':'Average reviews, low repeat bookings, and no deliberate guest journey — leaving your biggest competitive advantage untapped.',
+    'sv3-a':'Pre-stay communication sequences, mid-stay check-ins to resolve issues before they become reviews, and post-stay follow-ups designed to generate five-star feedback consistently.',
+    'sv3-o':'Review scores kept consistently above 4.5 stars and an increase in repeat bookings and direct referrals.',
+    'sv4-p':'Generic listings competing on price in markets where differentiation is the only path to sustainable margins.',
+    'sv4-a':'Competitive landscape analysis, unique value proposition definition, brand identity alignment, and listing copywriting with SEO strategy.',
+    'sv4-o':'A property with a clear identity that attracts the right guests at the right price, consistently.',
+    'sv5-p':'Most listings describe the property rather than selling the experience, losing bookings to competitors with inferior spaces but better copy.',
+    'sv5-a':'Platform-specific titles and descriptions that hit OTA search algorithms, photo sequence strategy, amenity framing, and SEO-optimized copy for Airbnb, Booking.com, and Expedia in English and Spanish.',
+    'sv5-o':'Higher click-through rates, more conversion from views to bookings, and a listing that commands its price without explanation.',
+    'sv6-w':'Property owners who have never listed before, or investors entering the STR market for the first time and need end-to-end guidance.',
+    'sv6-a':'We identify the right platforms for your property and market, then guide you through account setup, identity verification, listing creation, pricing configuration, house rules, and automated messaging.',
+    'sv6-o':'A fully built, optimized, and live Airbnb host profile ready to receive and convert bookings from launch.',
+    'cta-sol':'Ready to transform <em>your property?</em>','cta-sol-btn':'Book a Strategy Audit',
+    'meth-label':'Our Process','meth-title':'The <em>ESCALA</em> Method™',
+    'meth-body':'A proprietary six-phase consulting methodology built on field experience across Latin America and the Caribbean. Applied strategy, not theory.',
+    'ph1n':'Evaluate','ph1d':'Full diagnostic of current performance: occupancy, ADR, RevPAR, review scores, operational gaps, and market positioning relative to competitors.',
+    'ph2n':'Structure','ph2d':'Design the operational architecture including SOPs, team roles, tech stack, and communication flows that support sustainable growth.',
+    'ph3n':'Calibrate','ph3d':'Fine-tune pricing strategy, channel mix, listing content, and guest experience touchpoints based on real market data.',
+    'ph4n':'Amplify','ph4d':'Deploy brand positioning, marketing channels, and review generation systems to increase visibility and attract higher-value guests.',
+    'ph5n':'Leverage','ph5d':'Identify expansion opportunities including new units, new markets, and new revenue streams built on the stable operational base we create together.',
+    'ph6n':'Accelerate','ph6d':'Continuous optimization, monthly performance reporting, and strategic adjustment to sustain growth and adapt to market shifts.',
+    'cta-meth':'<em>ESCALA</em> applied to your property.','cta-meth-btn':'Start the Evaluation',
+    'cases-label':'Results','cases-title':'Measured <em>Impact</em>',
+    'cases-body':'Every case study reflects a real engagement. Numbers are the baseline. The strategy behind them is what we bring.',
+    'c1-type':'Boutique Hotel · Puerto Rico','c1-metric':'Revenue growth within 6 months',
+    'c1-desc':'A 12-room boutique hotel in San Juan with strong location but weak OTA presence and no pricing strategy. We restructured channel management, implemented dynamic pricing, and rewrote all listing content. RevPAR moved from $68 to $97 within three months and continued to grow.',
+    'c2-type':'STR Portfolio · Nagua, Dominican Republic','c2-metric':'Average rating maintained consistently since launch',
+    'c2-desc':'Full onboarding and launch strategy for a six-unit boutique residence: host profile creation, listing copywriting, automated guest communication, housekeeping SOPs, and seasonal pricing calendar. Launched with the right foundation and ranked in the top tier of its market within 60 days.',
+    'c3-type':'STR Management · Santa Marta, Colombia','c3-metric':'Occupancy increase · first season',
+    'c3-desc':'A coastal property at 44% annual occupancy despite being in a high-demand corridor. We redesigned the pricing calendar, shifted the OTA channel mix, rewrote listings in English and Spanish, and implemented a guest review recovery strategy. Occupancy stabilized at 80%+ within one season.',
+    'st1':'Properties Served','st2':'Countries Active','st3':'Review Score Maintained','st4':'Revenue Managed',
+    'cta-cases':'Your property could be <em>next.</em>','cta-cases-btn':'Request a Strategy Audit',
+    'faq-label':'Insights &amp; FAQ','faq-title':'Common Questions, <em>Honest Answers</em>',
+    'faq-intro':'Everything property owners ask about revenue strategy, operations, and what it takes to grow a hospitality business in Latin America and the Caribbean.',
+    'fcat1':'Pricing &amp; Revenue','fcat2':'Operations &amp; Management','fcat3':'Growth &amp; Strategy','fcat4':'Working with Escalante Strategic','fcat4-s':'Working with Us',
+    'q1':'How do I know if my nightly rate is too low or too high?',
+    'a1p1':'The clearest signal is your occupancy rate relative to your market. Consistently above 85% with calendars booking out weeks ahead? You are likely priced too low. Below 60% with no clear seasonal explanation? Your rate may be misaligned with the value guests perceive.',
+    'a1p2':'The deeper answer requires comparing your ADR against comparable properties in your market. Strong reviews with low occupancy usually points to a visibility or pricing issue. High occupancy with flat income almost always points to rate strategy.',
+    'q2':'What is dynamic pricing and do I really need it?',
+    'a2p1':'Dynamic pricing means adjusting your nightly rate in real time based on demand signals: local events, competitor availability, booking lead time, and seasonal patterns.',
+    'a2p2':'If you are managing more than one unit or generating more than $2,000 per month in rental income, the answer is yes. The revenue difference between static and dynamic pricing typically ranges from 15 to 35% annually.',
+    'q3':'How should I handle pricing during periods of lower demand?',
+    'a3p1':'Dropping rates aggressively to chase occupancy is the most common mistake during slow periods. A smarter approach is a modest rate reduction paired with longer minimum stays to attract extended-trip travelers.',
+    'a3p2':'The goal during slow demand is not to fill every night at any price. It is to maintain RevPAR at a level that supports your annual financial targets while protecting the quality of your guest base.',
+    'q4':'What is the minimum tech stack a serious STR operator needs?',
+    'a4p1':'For a single property: a channel manager to sync calendars across platforms, a dynamic pricing tool, and automated messaging templates for pre-arrival, check-in, and review requests. That foundation alone saves 5 to 8 hours per week.',
+    'a4p2':'For a portfolio of three or more units: add a property management system with housekeeping task assignment, a unified inbox, and owner reporting.',
+    'q5':'How do I manage a property remotely from another country?',
+    'a5p1':'Remote management works when three things are in place: a reliable local contact with authority to handle guest issues on the ground, documented SOPs so nothing depends on a phone call to you, and smart access technology so check-in never requires physical presence.',
+    'a5p2':'Automated guest messaging handles roughly 80% of guest interactions. The goal is to design a system where your absence is invisible to the guest.',
+    'q6':'What should a housekeeping SOP for a short-term rental include?',
+    'a6p1':'A solid housekeeping SOP covers four areas: a room-by-room cleaning checklist with photos of the expected final state, an inventory list for consumables and linens, a damage and incident reporting protocol, and a time estimate per unit type.',
+    'a6p2':'The detail most operators miss is the guest-ready final walkthrough: a five-minute check from the guest\'s perspective. These are the details that move a property from 4.6 to 4.9 on any platform.',
+    'q7':'When is the right time to hire a property manager or consultant?',
+    'a7p1':'The right time is before you need one, not after the problems have already cost you reviews and revenue. Consider professional help when you are spending more than 10 hours per week on operations, your review score has stagnated below 4.5, or occupancy has plateaued for two consecutive seasons.',
+    'q8':'Is it worth listing on multiple platforms, or should I focus on Airbnb?',
+    'a8p1':'Multi-platform distribution is almost always worth it, but only when you have a channel manager in place to eliminate double-booking risk. Airbnb leads in most Latin American and Caribbean markets, but Booking.com captures a significant share of European and domestic travelers.',
+    'a8p2':'The typical revenue lift from adding Booking.com to an Airbnb-only property is 8 to 15% in additional occupancy. Each platform has its own algorithm, cancellation policy, and guest profile.',
+    'q9':'How do I improve my review score from 4.6 to 4.9?',
+    'a9p1':'The gap between 4.6 and 4.9 is almost never about the physical property. It is about expectation management and operational consistency.',
+    'a9p2':'The three highest-leverage changes: audit your listing photos and description against the actual experience. Send a mid-stay check-in message. And systematize your cleaning and setup so the experience is identical every single turnover.',
+    'q10':'What does a Strategy Audit include?',
+    'a10p1':'A Strategy Audit is a 30-day diagnostic engagement covering revenue analysis (occupancy, ADR, RevPAR versus market benchmarks), listing audit (copy, photos, SEO positioning), channel mix review, operational gap assessment, and guest experience evaluation.',
+    'a10p2':'The deliverable is a written strategic report with specific, ranked recommendations. Most clients see measurable improvement within 60 days of starting implementation.',
+    'q11':'Do you work with property owners outside of Latin America?',
+    'a11p1':'Yes. Our clients include property owners based in the United States, Europe, and Canada who own or are acquiring assets in Colombia, Puerto Rico, or the Dominican Republic. We operate entirely in English or Spanish, across time zones.',
+    'faq-browse':'Browse by Topic','faq-sc-title':'Still have questions?',
+    'faq-sc-body':'Every property is different. Book a call and we will give you specific answers for your situation.',
+    'faq-sc-btn':'Book a Free Call',
+    'cta-faq':'Ready for <em>specific answers?</em>','cta-faq-btn':'Request a Strategy Audit',
+    'about-label':'About','about-title':'Built from the <em>Field,</em> Not the Classroom',
+    'about-body':'Escalante Strategic was founded on a simple premise: hospitality consulting should be practiced by people who actually manage properties.',
+    'val1h':'Boutique focus.','val1b':'We work with a select number of clients at any time — enough to deliver real attention, not scaled mediocrity.',
+    'val2h':'Field-tested methodology.','val2b':'Método ESCALA™ was built through real engagements across three countries, not borrowed from corporate consulting frameworks.',
+    'val3h':'Bilingual by design.','val3b':'We operate natively in English and Spanish across Latin America and the Caribbean.',
+    'val4h':'Results first.','val4b':'Every engagement is measured. No vanity metrics, only numbers that affect your bottom line.',
+    'profile-role':'Founder &amp; CEO',
+    'profile-bio':'Hospitality and tourism business administrator with a specialization in financial management. Founder of Escalante Strategic and creator of Método ESCALA™, built through direct property management across Colombia, Puerto Rico, and the Dominican Republic. She also serves as Director of Guest Services and Technology for Rosalina Boutique Hotels in Puerto Rico.',
+    'con-label':'Contact','con-title':'Request a <em>Strategy Audit</em>',
+    'con-body':'Tell us about your property. We review every submission and respond within 48 business hours.',
+    'ci1l':'Email','ci2l':'WhatsApp Business','ci3l':'LinkedIn','ci4l':'Primary Markets','ci4v':'Colombia · Puerto Rico · Dominican Republic','ci5l':'Languages',
+    'ch-wa':'Write us on WhatsApp Business','ch-li':'Connect on LinkedIn',
+    'fl-type':'Property Type','fl-sel':'Select...','fl-t1':'Boutique Hotel (1–30 rooms)','fl-t2':'Short-Term Rental Portfolio','fl-t3':'Single STR Property','fl-t4':'Hostel / Guesthouse','fl-t5':'Starting from zero (Listing Onboarding)','fl-t6':'Other',
+    'fl-units':'Number of Units','fl-rev':'Monthly Revenue (USD)','fl-r0':'Not yet generating revenue','fl-r1':'Under $2,000','fl-r2':'$2,000 to $5,000','fl-r3':'$5,000 to $15,000','fl-r4':'$15,000 to $50,000','fl-r5':'$50,000+',
+    'fl-challenge':'Main Challenge','fl-budget':'Budget for Consulting',
+    'fl-b1':'Under $500/mo','fl-b2':'$500 to $1,500/mo','fl-b3':'$1,500 to $3,000/mo','fl-b4':'$3,000+/mo','fl-b5':'Project-based (one-time)',
+    'fl-name':'Your Name','fl-email':'Email Address','fl-submit':'Request Strategy Audit',
+    'fl-success':'✓ Thank you! We\'ll respond within 48 business hours.',
+    'footer-desc':'Boutique hospitality consulting across Colombia, Puerto Rico, and the Dominican Republic. Built on field experience, powered by Método ESCALA™.',
+    'footer-nav':'Navigation','footer-contact':'Contact'
+  },
+  es: {
+    'nav-home':'Inicio','nav-solutions':'Servicios','nav-method':'Metodología','nav-cases':'Casos','nav-faq':'FAQ','nav-about':'Nosotros','nav-contact':'Contacto','nav-cta':'Auditoría Estratégica',
+    'hero-label':'Consultoría Boutique de Hospitalidad',
+    'hero-title':'Escala tus <em>Ingresos de Hospitalidad</em> con Estrategia de Precisión',
+    'hero-sub':'Transformamos hoteles y rentas vacacionales de bajo rendimiento en motores de ingresos sistematizados de alto desempeño en Colombia, Puerto Rico y República Dominicana.',
+    'hero-cta1':'Solicitar Auditoría Estratégica','hero-cta2':'Ver Casos de Éxito',
+    'm1':'Crecimiento de Ingresos Promedio','mt1':'en 6 meses',
+    'm2':'Aumento de Ocupación','mt2':'primera temporada',
+    'm3':'Puntuación de Reseñas','mt3':'mantenida consistentemente',
+    'm4':'Propiedades Gestionadas','mt4':'en 3 países',
+    'prob-label':'El Problema',
+    'prob-title':'Por Qué la Mayoría de los Negocios de Hospitalidad <em>No Alcanzan su Potencial</em>',
+    'prob-body':'La brecha entre el potencial de una propiedad y su rendimiento rara vez tiene que ver con el espacio. Tiene que ver con estrategia, sistemas y posicionamiento.',
+    'p1t':'Distribución Fragmentada','p1d':'Baja ocupación a pesar de estar en múltiples plataformas, sin una estrategia de canales ni lógica de precios que las conecte.',
+    'p2t':'Precios Estáticos','p2d':'Tarifas fijas que dejan ingresos sobre la mesa en temporada alta y fallan en atraer huéspedes en períodos más lentos.',
+    'p3t':'Brechas Operativas','p3d':'Sin SOPs documentados, experiencia de huésped inconsistente y mantenimiento reactivo que erosionan reseñas y reservas repetidas.',
+    'p4t':'Posicionamiento Débil','p4d':'Anuncios genéricos sin identidad diferenciada, compitiendo por precio cuando la oportunidad es competir por valor.',
+    'serv-label':'Servicios','serv-title':'Seis Pilares de <em>Crecimiento Estratégico</em>',
+    's1t':'Optimización de Ingresos','s1d':'Precios dinámicos, estrategia de canal y gestión de tarifas por demanda para maximizar RevPAR en tu portafolio.',
+    's2t':'Sistemas Operativos','s2d':'SOPs, flujos de housekeeping, comunicación automatizada con huéspedes e integración tecnológica para operaciones escalables.',
+    's3t':'Experiencia del Huésped','s3d':'Ingeniería de reseñas, check-ins durante la estadía y seguimientos post-estadía para mantener tu puntuación consistentemente sobre 4.5 estrellas.',
+    's4t':'Posicionamiento en el Mercado','s4d':'Análisis competitivo, diferenciación de marca y optimización de listados para cobrar tarifas premium en cualquier mercado.',
+    's5t':'Copywriting de Listados','s5d':'Títulos, descripciones y secuencias de fotos optimizados para plataformas, diseñados para convertir visitantes en huéspedes en Airbnb, Booking.com y Expedia.',
+    's6t':'Onboarding de Listado','s6d':'Identificamos las plataformas correctas y te guiamos paso a paso: creación de cuenta, verificación de identidad, primer listado, estrategia de precios y lanzamiento con base sólida para posicionar rápido.',
+    'snew':'Nuevo','cta-home':'Deja de adivinar.<br><em>Empieza a escalar.</em>','cta-home-btn':'Solicitar Auditoría Estratégica',
+    'sol-page-label':'Servicios','sol-page-title':'Lo Que <em>Hacemos</em>',
+    'sol-page-body':'Cada compromiso es personalizado. Diagnosticamos, diseñamos e implementamos estrategias específicas para la realidad y el contexto de mercado de tu propiedad.',
+    'sv-prob':'El Problema','sv-appr':'Nuestro Enfoque','sv-out':'El Resultado','sv-who':'Para Quién Es',
+    'sv1-p':'Tarifas fijas y estrategia de canal desalineada que deja sin capturar entre el 20 y el 40% del ingreso potencial cada mes.',
+    'sv1-a':'Modelos de precios dinámicos basados en demanda, auditorías de canal, optimización de algoritmos OTA y lógica de estancia mínima calibrada por temporada y mercado.',
+    'sv1-o':'Crecimiento promedio de ingresos del 82% en los primeros seis meses de compromiso.',
+    'sv2-p':'Operaciones que dependen de la memoria en lugar de sistemas, generando inconsistencia y fallas en la experiencia del huésped.',
+    'sv2-a':'Diseño completo de biblioteca de SOPs, automatización de flujos de housekeeping y mantenimiento, integración de PMS y channel manager, y marcos de capacitación de equipos.',
+    'sv2-o':'Una propiedad que funciona sin intervención constante del propietario — escalable, delegable y consistente.',
+    'sv3-p':'Reseñas promedio, pocas reservas repetidas y sin un recorrido deliberado del huésped — dejando sin aprovechar tu mayor ventaja competitiva.',
+    'sv3-a':'Secuencias de comunicación pre-estadía, check-ins durante la estadía para resolver problemas antes de que se conviertan en reseñas, y seguimientos post-estadía diseñados para generar retroalimentación de cinco estrellas.',
+    'sv3-o':'Puntuaciones de reseñas mantenidas consistentemente sobre 4.5 estrellas y aumento en reservas repetidas y referencias directas.',
+    'sv4-p':'Listados genéricos compitiendo por precio en mercados donde la diferenciación es el único camino hacia márgenes sostenibles.',
+    'sv4-a':'Análisis del panorama competitivo, definición de propuesta de valor única, alineación de identidad de marca y copywriting de listados con estrategia SEO.',
+    'sv4-o':'Una propiedad con una identidad clara que atrae a los huéspedes correctos al precio correcto, de manera consistente.',
+    'sv5-p':'La mayoría de los listados describe la propiedad en lugar de vender la experiencia, perdiendo reservas ante competidores con espacios inferiores pero mejor copy.',
+    'sv5-a':'Títulos y descripciones específicos por plataforma que aprovechan los algoritmos de búsqueda OTA, estrategia de secuencia de fotos, presentación de amenidades y copy optimizado para SEO en inglés y español.',
+    'sv5-o':'Mayores tasas de clics, más conversión de vistas a reservas y un listado que comanda su precio sin necesidad de explicación.',
+    'sv6-w':'Propietarios que nunca han publicado antes, o inversores que ingresan al mercado STR por primera vez y necesitan orientación completa.',
+    'sv6-a':'Identificamos las plataformas correctas para tu propiedad y mercado, y te guiamos en la configuración de cuenta, verificación de identidad, creación de listado, configuración de precios, reglas de la casa y mensajería automatizada.',
+    'sv6-o':'Un perfil de anfitrión completamente construido, optimizado y activo en Airbnb, listo para recibir y convertir reservas desde el lanzamiento.',
+    'cta-sol':'¿Listo para transformar <em>tu propiedad?</em>','cta-sol-btn':'Solicitar Auditoría Estratégica',
+    'meth-label':'Nuestro Proceso','meth-title':'El Método <em>ESCALA</em>™',
+    'meth-body':'Una metodología de consultoría propietaria de seis fases construida sobre experiencia real en América Latina y el Caribe. Estrategia aplicada, no teoría.',
+    'ph1n':'Evaluar','ph1d':'Diagnóstico completo del rendimiento actual: ocupación, ADR, RevPAR, puntuaciones de reseñas, brechas operativas y posicionamiento en el mercado frente a competidores.',
+    'ph2n':'Estructurar','ph2d':'Diseñar la arquitectura operativa que incluye SOPs, roles de equipo, stack tecnológico y flujos de comunicación que soporten el crecimiento sostenible.',
+    'ph3n':'Calibrar','ph3d':'Afinar la estrategia de precios, mezcla de canales, contenido de listados y puntos de contacto de experiencia del huésped basados en datos reales de mercado.',
+    'ph4n':'Amplificar','ph4d':'Implementar posicionamiento de marca, canales de marketing y sistemas de generación de reseñas para aumentar la visibilidad y atraer huéspedes de mayor valor.',
+    'ph5n':'Apalancar','ph5d':'Identificar oportunidades de expansión incluyendo nuevas unidades, nuevos mercados y nuevas fuentes de ingresos construidas sobre la base operativa estable que creamos juntos.',
+    'ph6n':'Acelerar','ph6d':'Optimización continua, reportes mensuales de rendimiento y ajuste estratégico para sostener el crecimiento y adaptarse a los cambios del mercado.',
+    'cta-meth':'<em>ESCALA</em> aplicado a tu propiedad.','cta-meth-btn':'Iniciar la Evaluación',
+    'cases-label':'Resultados','cases-title':'Impacto <em>Medido</em>',
+    'cases-body':'Cada caso de estudio refleja un compromiso real. Los números son la línea base. La estrategia detrás de ellos es lo que aportamos.',
+    'c1-type':'Hotel Boutique · Puerto Rico','c1-metric':'Crecimiento de ingresos en 6 meses',
+    'c1-desc':'Un hotel boutique de 12 habitaciones en San Juan con excelente ubicación pero débil presencia en OTAs y sin estrategia de precios. Reestructuramos la gestión de canales, implementamos precios dinámicos y reescribimos todo el contenido de listados. El RevPAR pasó de $68 a $97 en tres meses y continuó creciendo.',
+    'c2-type':'Portafolio STR · Nagua, República Dominicana','c2-metric':'Calificación promedio mantenida consistentemente desde el lanzamiento',
+    'c2-desc':'Estrategia completa de onboarding y lanzamiento para una residencia boutique de seis unidades: creación de perfil de anfitrión, copywriting de listados, comunicación automatizada con huéspedes, SOPs de housekeeping y calendario de precios estacional. Lanzada con la base correcta y posicionada en el nivel superior de su mercado en 60 días.',
+    'c3-type':'Gestión STR · Santa Marta, Colombia','c3-metric':'Aumento de ocupación · primera temporada',
+    'c3-desc':'Una propiedad costera con 44% de ocupación anual a pesar de estar en un corredor de alta demanda. Rediseñamos el calendario de precios, cambiamos la mezcla de canales OTA, reescribimos listados en inglés y español e implementamos una estrategia de recuperación de reseñas. La ocupación se estabilizó en más del 80% en una temporada.',
+    'st1':'Propiedades Atendidas','st2':'Países Activos','st3':'Puntuación de Reseñas Mantenida','st4':'Ingresos Gestionados',
+    'cta-cases':'Tu propiedad podría ser <em>la siguiente.</em>','cta-cases-btn':'Solicitar Auditoría Estratégica',
+    'faq-label':'Perspectivas y Preguntas Frecuentes','faq-title':'Preguntas Comunes, <em>Respuestas Honestas</em>',
+    'faq-intro':'Todo lo que los propietarios preguntan sobre estrategia de ingresos, operaciones y lo que se necesita para hacer crecer un negocio de hospitalidad en América Latina y el Caribe.',
+    'fcat1':'Precios e Ingresos','fcat2':'Operaciones y Gestión','fcat3':'Crecimiento y Estrategia','fcat4':'Trabajar con Escalante Strategic','fcat4-s':'Trabajar con Nosotros',
+    'q1':'¿Cómo sé si mi tarifa nocturna es demasiado baja o alta?',
+    'a1p1':'La señal más clara es tu tasa de ocupación en relación con tu mercado. ¿Consistentemente por encima del 85% con calendarios que se reservan con semanas de anticipación? Probablemente tienes precios demasiado bajos. ¿Por debajo del 60% sin una explicación estacional clara? Tu tarifa puede estar desalineada con el valor que perciben los huéspedes.',
+    'a1p2':'La respuesta más profunda requiere comparar tu ADR con propiedades similares en tu mercado. Reseñas sólidas con baja ocupación generalmente apunta a un problema de visibilidad o precios. Alta ocupación con ingresos estables casi siempre apunta a la estrategia de tarifas.',
+    'q2':'¿Qué son los precios dinámicos y realmente los necesito?',
+    'a2p1':'Los precios dinámicos significan ajustar tu tarifa nocturna en tiempo real basándote en señales de demanda: eventos locales, disponibilidad de competidores, tiempo de anticipación de reserva y patrones estacionales.',
+    'a2p2':'Si gestionas más de una unidad o generas más de $2,000 por mes en ingresos por alquiler, la respuesta es sí. La diferencia de ingresos entre precios estáticos y dinámicos típicamente oscila entre el 15 y el 35% anualmente.',
+    'q3':'¿Cómo manejo los precios en períodos de menor demanda?',
+    'a3p1':'Bajar agresivamente las tarifas para perseguir ocupación es el error más común en períodos lentos. Un enfoque más inteligente es una reducción modesta de tarifa combinada con estadías mínimas más largas para atraer viajeros de viajes extendidos.',
+    'a3p2':'El objetivo durante la baja demanda no es llenar cada noche a cualquier precio. Es mantener el RevPAR en un nivel que respalde tus objetivos financieros anuales mientras proteges la calidad de tu base de huéspedes.',
+    'q4':'¿Cuál es el stack tecnológico mínimo que necesita un operador STR serio?',
+    'a4p1':'Para una sola propiedad: un channel manager para sincronizar calendarios entre plataformas, una herramienta de precios dinámicos y plantillas de mensajería automatizada. Esa base sola ahorra de 5 a 8 horas por semana.',
+    'a4p2':'Para un portafolio de tres o más unidades: agrega un sistema de gestión de propiedades con asignación de tareas de housekeeping, una bandeja de entrada unificada e informes para propietarios.',
+    'q5':'¿Cómo gestiono una propiedad de forma remota desde otro país?',
+    'a5p1':'La gestión remota funciona cuando tres cosas están en su lugar: un contacto local confiable con autoridad para manejar problemas de huéspedes en el terreno, SOPs documentados para que nada dependa de una llamada telefónica contigo, y tecnología de acceso inteligente para que el check-in nunca requiera presencia física.',
+    'a5p2':'La mensajería automatizada de huéspedes maneja aproximadamente el 80% de las interacciones. El objetivo es diseñar un sistema donde tu ausencia sea invisible para el huésped.',
+    'q6':'¿Qué debe incluir un SOP de housekeeping para una renta vacacional?',
+    'a6p1':'Un SOP de housekeeping sólido cubre cuatro áreas: una lista de limpieza habitación por habitación con fotos del estado final esperado, una lista de inventario para consumibles y ropa de cama, un protocolo de reporte de daños e incidentes, y una estimación de tiempo por tipo de unidad.',
+    'a6p2':'El detalle que la mayoría de los operadores pasa por alto es el recorrido final de preparación para el huésped: una verificación de cinco minutos desde la perspectiva del huésped. Son estos detalles los que mueven una propiedad de 4.6 a 4.9 en cualquier plataforma.',
+    'q7':'¿Cuándo es el momento adecuado para contratar un gestor de propiedades o consultor?',
+    'a7p1':'El momento adecuado es antes de que lo necesites, no después de que los problemas ya te hayan costado reseñas e ingresos. Considera ayuda profesional cuando estés invirtiendo más de 10 horas por semana en operaciones, tu puntuación de reseñas esté estancada por debajo de 4.5, o la ocupación se haya estancado por dos temporadas consecutivas.',
+    'q8':'¿Vale la pena estar en múltiples plataformas o debo centrarme en Airbnb?',
+    'a8p1':'La distribución en múltiples plataformas casi siempre vale la pena, pero solo cuando tienes un channel manager para eliminar el riesgo de doble reserva. Airbnb lidera en la mayoría de los mercados de América Latina y el Caribe, pero Booking.com captura una parte significativa de viajeros europeos y domésticos.',
+    'a8p2':'El aumento típico de ingresos al agregar Booking.com a una propiedad solo en Airbnb es del 8 al 15% en ocupación adicional. Cada plataforma tiene su propio algoritmo, política de cancelación y perfil de huésped.',
+    'q9':'¿Cómo mejoro mi puntuación de reseñas de 4.6 a 4.9?',
+    'a9p1':'La brecha entre 4.6 y 4.9 casi nunca tiene que ver con la propiedad física. Tiene que ver con la gestión de expectativas y la consistencia operativa.',
+    'a9p2':'Los tres cambios de mayor impacto: audita tus fotos y descripción del listado frente a la experiencia real. Envía un mensaje de check-in durante la estadía. Y sistematiza tu limpieza y preparación para que la experiencia sea idéntica en cada cambio de huésped.',
+    'q10':'¿Qué incluye una Auditoría Estratégica?',
+    'a10p1':'Una Auditoría Estratégica es un compromiso de diagnóstico de 30 días que cubre análisis de ingresos (ocupación, ADR, RevPAR versus puntos de referencia del mercado), auditoría de listados, revisión de mezcla de canales, evaluación de brechas operativas y evaluación de experiencia del huésped.',
+    'a10p2':'El entregable es un informe estratégico escrito con recomendaciones específicas y priorizadas. La mayoría de los clientes ven mejoras medibles dentro de los 60 días posteriores al inicio de la implementación.',
+    'q11':'¿Trabajan con propietarios fuera de América Latina?',
+    'a11p1':'Sí. Nuestros clientes incluyen propietarios con base en Estados Unidos, Europa y Canadá que poseen o están adquiriendo activos en Colombia, Puerto Rico o República Dominicana. Operamos completamente en inglés o español, en diferentes zonas horarias.',
+    'faq-browse':'Explorar por Tema','faq-sc-title':'¿Tienes más preguntas?',
+    'faq-sc-body':'Cada propiedad es diferente. Agenda una llamada y te daremos respuestas específicas para tu situación.',
+    'faq-sc-btn':'Agendar una Llamada Gratuita',
+    'cta-faq':'¿Listo para <em>respuestas específicas?</em>','cta-faq-btn':'Solicitar Auditoría Estratégica',
+    'about-label':'Nosotros','about-title':'Construido desde el <em>Campo,</em> No del Aula',
+    'about-body':'Escalante Strategic fue fundada sobre una premisa simple: la consultoría de hospitalidad debe ser practicada por personas que realmente gestionan propiedades.',
+    'val1h':'Enfoque boutique.','val1b':'Trabajamos con un número selecto de clientes a la vez — suficiente para brindar atención real, no mediocridad escalada.',
+    'val2h':'Metodología probada en campo.','val2b':'El Método ESCALA™ fue construido a través de compromisos reales en tres países, no tomado prestado de marcos de consultoría corporativa.',
+    'val3h':'Bilingüe por diseño.','val3b':'Operamos nativamente en inglés y español en toda América Latina y el Caribe.',
+    'val4h':'Resultados primero.','val4b':'Cada compromiso es medido. Sin métricas de vanidad, solo números que afectan tu resultado final.',
+    'profile-role':'Fundadora y CEO',
+    'profile-bio':'Administradora de empresas de hospitalidad y turismo con especialización en gestión financiera. Fundadora de Escalante Strategic y creadora del Método ESCALA™, construido a través de la gestión directa de propiedades en Colombia, Puerto Rico y República Dominicana. También se desempeña como Directora de Servicios al Huésped y Tecnología para Rosalina Boutique Hotels en Puerto Rico.',
+    'con-label':'Contacto','con-title':'Solicitar una <em>Auditoría Estratégica</em>',
+    'con-body':'Cuéntanos sobre tu propiedad. Revisamos cada solicitud y respondemos dentro de 48 horas hábiles.',
+    'ci1l':'Correo Electrónico','ci2l':'WhatsApp Business','ci3l':'LinkedIn','ci4l':'Mercados Principales','ci4v':'Colombia · Puerto Rico · República Dominicana','ci5l':'Idiomas',
+    'ch-wa':'Escríbenos por WhatsApp Business','ch-li':'Conectar en LinkedIn',
+    'fl-type':'Tipo de Propiedad','fl-sel':'Seleccionar...','fl-t1':'Hotel Boutique (1–30 habitaciones)','fl-t2':'Portafolio de Renta Vacacional','fl-t3':'Propiedad STR Individual','fl-t4':'Hostal / Casa de Huéspedes','fl-t5':'Comenzar desde cero (Onboarding de Listado)','fl-t6':'Otro',
+    'fl-units':'Número de Unidades','fl-rev':'Ingresos Mensuales (USD)','fl-r0':'Aún no genera ingresos','fl-r1':'Menos de $2,000','fl-r2':'$2,000 a $5,000','fl-r3':'$5,000 a $15,000','fl-r4':'$15,000 a $50,000','fl-r5':'$50,000+',
+    'fl-challenge':'Principal Desafío','fl-budget':'Presupuesto para Consultoría',
+    'fl-b1':'Menos de $500/mes','fl-b2':'$500 a $1,500/mes','fl-b3':'$1,500 a $3,000/mes','fl-b4':'$3,000+/mes','fl-b5':'Por proyecto (única vez)',
+    'fl-name':'Tu Nombre','fl-email':'Correo Electrónico','fl-submit':'Solicitar Auditoría Estratégica',
+    'fl-success':'✓ ¡Gracias! Responderemos dentro de 48 horas hábiles.',
+    'footer-desc':'Consultoría boutique de hospitalidad en Colombia, Puerto Rico y República Dominicana. Construida sobre experiencia real, impulsada por el Método ESCALA™.',
+    'footer-nav':'Navegación','footer-contact':'Contacto'
+  }
+};
+
+let currentLang = 'en';
+
+function setLang(l) {
+  currentLang = l;
+  // Desktop toggles
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.trim() === l.toUpperCase()));
+  // Mobile toggles
+  const mEn = document.getElementById('mob-en');
+  const mEs = document.getElementById('mob-es');
+  if (mEn) mEn.classList.toggle('active', l === 'en');
+  if (mEs) mEs.classList.toggle('active', l === 'es');
+
+  const tr = T[l];
+
+  // Update all data-key elements
+  document.querySelectorAll('[data-key]').forEach(el => {
+    const k = el.getAttribute('data-key');
+    if (tr[k] !== undefined) {
+      el.innerHTML = tr[k];
+    }
+  });
+
+  // Update placeholders
+  document.querySelectorAll('[data-placeholder-en]').forEach(el => {
+    el.placeholder = el.getAttribute(`data-placeholder-${l}`) || el.getAttribute('data-placeholder-en');
+  });
+}
+
+function showPage(n) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const page = document.getElementById('page-' + n);
+  if (page) {
+    page.classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+  closeMobile();
+  // Re-apply language after page switch
+  setLang(currentLang);
+}
+
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+function scrollToFaq(id, el) {
+  document.querySelectorAll('.sidebar-topic').forEach(t => t.classList.remove('active-topic'));
+  if (el) el.classList.add('active-topic');
+  const target = document.getElementById(id);
+  if (target) {
+    const top = target.getBoundingClientRect().top + window.scrollY - 100;
+    window.scrollTo({top, behavior: 'smooth'});
+  }
+}
+
+function toggleMobile() {
+  const menu = document.getElementById('mobile-menu');
+  menu.classList.toggle('open');
+}
+
+function closeMobile() {
+  document.getElementById('mobile-menu').classList.remove('open');
+}
+
+function submitForm() {
+  const name = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  if (!name || !email) {
+    alert(currentLang === 'es' ? 'Por favor completa tu nombre y correo electrónico.' : 'Please fill in your name and email address.');
+    return;
+  }
+  const msg = document.getElementById('success-msg');
+  msg.classList.add('show');
+  setTimeout(() => msg.classList.remove('show'), 6000);
+}
+
+// Nav scroll shadow
+window.addEventListener('scroll', () => {
+  document.getElementById('main-nav').classList.toggle('scrolled', window.scrollY > 10);
+});
+
+// Init
+setLang('en');
+</script>
 </body>
 </html>
